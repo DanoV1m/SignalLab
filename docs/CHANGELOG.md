@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — professional instrument presentation
+- Extract Cartesian canvas rendering into an independent UI module with bounded per-canvas keys.
+- Batch grid and marker paths, avoid redundant backing-store resets and skip unchanged math canvases.
+- Improve dashboard capability summary and filter chart hierarchy; add paired canvas measurements and regressions.
+
 ## Unreleased — session architecture
 - Extract bounded DOM-free session model with independent source, analysis and math caches.
 - Use linear-time full moving-average convolution; retain general convolution as reference.

@@ -15,3 +15,6 @@ These are synchronous calls, excluding paint, input latency and hardware. Do not
 Run `python tests/e2e/compatibility.py --browser chromium` (or firefox/webkit) with Playwright 1.51 installed, or use current CI artifacts.
 
 The compatibility suite additionally records 20 paired cache-cold and cache-warm mathematics calls on the same runner and browser. Each cold call clears all session caches, then its paired warm call reuses identical inputs. The pair measures the benefit of reuse within this candidate; it is not an isolated comparison with the previous commit, and includes canvas drawing but not paint. The browser smoke suite now also collects actual filter and mathematics screenshots in both distributions.
+
+## Canvas presentation follow-up
+The new renderer avoids resetting unchanged backing-store dimensions, batches grid and phase marker paths and skips identical mathematics canvases using explicit immutable identities. A second paired measurement compares forced canvas redraw with unchanged canvas reuse using the same numerical data, 20 pairs per browser. Browser tests exercise unchanged renders and control/theme invalidation. Results must be verified on the corresponding CI run; no claim of end-to-end latency or GPU/paint improvement is made.

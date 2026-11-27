@@ -35,3 +35,5 @@ python tests/e2e/browser_smoke.py --hosted --modular
 All current jobs must succeed for the current PR head. Do not merge on stale status. CI collects real screenshots as the browser-screenshots artifact. Read [Excellence Board review](EXCELLENCE_REVIEW.md) for review priorities. Manual follow-up: physical microphone, Firefox/Safari, prolonged rendering, keyboard/screen-reader audit, and live HTTPS after owner-approved deployment.
 
 See [scientific validation](SCIENTIFIC_VALIDATION.md) for tolerances and the generated reference report.
+
+Canvas presentation: two Node cache-key tests and hosted browser assertions for unchanged, parameter and theme rendering. Paired forced/reused canvas measurements are diagnostic, not hard timing gates.

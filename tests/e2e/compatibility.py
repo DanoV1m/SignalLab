@@ -32,6 +32,17 @@ try:
    const stats=a=>{a.sort((x,y)=>x-y);return {iterations:a.length,median_ms:(a[9]+a[10])/2,max_ms:a[19]};};
    return {cold:stats(cold),warm:stats(warm)};
   }""")
+  # Compare forced math canvas redraw against unchanged canvas reuse on identical data.
+  canvas_pair=page.evaluate("""() => {
+   const forced=[],reused=[];
+   for(let i=0;i<20;i++){
+    SignalPlots.invalidate(document.getElementById('reconstruction'));SignalPlots.invalidate(document.getElementById('convolution'));
+    let t=performance.now();render();forced.push(performance.now()-t);
+    t=performance.now();render();reused.push(performance.now()-t);
+   }
+   const stats=a=>{a.sort((x,y)=>x-y);return {iterations:a.length,median_ms:(a[9]+a[10])/2,max_ms:a[19]};};
+   return {forced:stats(forced),reused:stats(reused)};
+  }""")
   page.locator('[data-nav=analyze]').click();page.locator('#window').select_option('blackman');page.wait_for_timeout(150)
   assert 'frames' in page.locator('#stftInfo').inner_text()
   page.locator('[data-nav=filter]').click();page.locator('#presetFilter').click();assert 'Group delay at' in page.locator('#groupDelayInfo').inner_text()
@@ -40,7 +51,7 @@ try:
    page.locator(f'[data-nav={mod}]').click();page.wait_for_timeout(100)
    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),mod
   assert not errors,errors
-  report={'browser':args.browser,'version':browser.version,'scope':'synthetic synchronous render calls, excludes paint and interaction latency','timings':timings,'math_cache_pair':paired}
+  report={'browser':args.browser,'version':browser.version,'scope':'synthetic synchronous render calls, excludes paint and interaction latency','timings':timings,'math_cache_pair':paired,'math_canvas_pair':canvas_pair}
   print(json.dumps(report,indent=2))
   (root/'dist'/f'compatibility-{args.browser}.json').write_text(json.dumps(report,indent=2))
   browser.close()

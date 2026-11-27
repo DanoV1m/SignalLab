@@ -19,3 +19,14 @@ body{font:14px/1.6 system-ui,sans-serif}header{padding:18px max(24px,3vw);backgr
 .control select{width:100%;min-width:0}
 @media(min-width:1200px){.module-nav button{min-height:44px}.module>.panel{padding:22px}}
 @media(max-width:540px){.module>.panel>h2,.chartheader h2{font-size:14px}.module canvas{margin:8px 0}}
+
+/* Research workbench design system: readable instrument hierarchy in both themes. */
+.instrument-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:630px;margin:20px 0 24px}
+.instrument-facts>div{border:1px solid var(--line);border-left:3px solid var(--cyan);background:var(--instrument-surface);border-radius:8px;padding:12px;min-width:0}
+.instrument-facts strong{display:block;font-size:24px;font-variant-numeric:tabular-nums;color:var(--text);line-height:1.2}
+.instrument-facts span{display:block;font-size:12px;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}
+.instrument-label{font-size:12px;letter-spacing:.04em;color:var(--muted);margin:20px 0 0}
+.hero h2{max-width:720px}.module-card{min-height:178px}.module-card .card-link{margin-top:auto}
+.module-nav button[aria-current=page]{font-weight:700}
+@media(max-width:540px){.instrument-facts{gap:6px}.instrument-facts>div{padding:9px 7px}.instrument-facts strong{font-size:20px}.instrument-facts span{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}

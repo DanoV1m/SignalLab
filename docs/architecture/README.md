@@ -110,3 +110,7 @@ flowchart LR
 ```
 
 Each cache holds one entry. Synthetic inputs are keyed by generator parameters, imported audio by object identity, offset and record length. Analysis is keyed by sample identity, rate, filter and window; math results by sample identity and their own controls. Stop/reset clears all entries; live samples are newly allocated. The UI treats returned arrays as immutable. The moving-average full convolution uses a sliding sum in O(N+M) time, while general convolution remains O(NM). Floating-point summation differs from the direct algorithm; equivalence is tolerance-tested, not bit-identical.
+
+## 6. Canvas presentation layer
+
+`src/ui/plots.js` owns the Cartesian plot rendering, grid batching, backing-store sizing and per-canvas invalidation. Math plots use immutable sample/result identity plus axes, dimensions, pixel ratio and theme as the render key. Unchanged plots are not drawn again; independent retained-bin changes affect reconstruction only unless the shared y range changes, in which case both plots must redraw. Other plots retain full drawing on demand. No visual downsampling or modification of exported data is performed. The rendering module uses a WeakMap and retains one key per canvas.
