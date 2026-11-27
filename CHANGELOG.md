@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — repository engineering
+- Organized numerical, academy, UI and style modules; root static entry point retained.
+- Added build parity tests and browser checks of both distributions.
+- Expanded engineering documentation and diagrams. No deployment.
+
 ## V2.0 release candidate
 - Active-workspace rendering, hardened audio source transitions and local processing.
 - Numerical regression suite (40 tests), Chromium smoke suite and hosted CI preparation.

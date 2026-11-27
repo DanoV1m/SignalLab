@@ -1,4 +1,4 @@
-const {test}=require('node:test');const assert=require('node:assert/strict');const d=require('./dsp.js');const near=(a,b,e=1e-8)=>assert.ok(Math.abs(a-b)<e,`${a} != ${b}`);
+const {test}=require('node:test');const assert=require('node:assert/strict');const d=require('../../src/dsp/dsp.js');const near=(a,b,e=1e-8)=>assert.ok(Math.abs(a-b)<e,`${a} != ${b}`);
 const fs=4096,n=1024;const sig=(f,amp=1)=>d.generate({n,fs,f,amp});
 test('FFT impulse has unit magnitude at every bin',()=>{const x=new Float64Array(8);x[0]=1;const {re,im}=d.fft(x);re.forEach(v=>near(v,1));im.forEach(v=>near(v,0));});
 test('FFT agrees with direct DFT',()=>{const x=[1,2,-1,4,0,3,2,1];const {re,im}=d.fft(x);for(let k=0;k<x.length;k++){let r=0,i=0;x.forEach((v,j)=>{r+=v*Math.cos(2*Math.PI*k*j/x.length);i-=v*Math.sin(2*Math.PI*k*j/x.length);});near(re[k],r);near(im[k],i);}});
@@ -18,7 +18,7 @@ test('STFT tracks ascending chirp',()=>{const a=d.stft(d.generate({n:4096,fs:800
 test('STFT rejects invalid window or hop',()=>{assert.throws(()=>d.stft(sig(256),fs,300,64));assert.throws(()=>d.stft(sig(256),fs,256,0));assert.throws(()=>d.stft(sig(256),fs,2048,64));});
 test('amplitude decibels and floor',()=>{near(d.db(1),0);near(d.db(.1),-20);near(d.db(0),-80);near(d.db(2,2),0);});
 test('measurement statistics',()=>{const m=d.metrics([-2,0,2,4]);near(m.pp,6);near(m.mean,1);near(m.rms,Math.sqrt(6));});
-const a=require('./advanced.js');
+const a=require('../../src/dsp/advanced.js');
 test('Butterworth digital cutoff is -3.0103 dB for orders 1–8',()=>{for(let o=1;o<=8;o++)for(const mode of ['low','high'])near(a.response(a.design(fs,mode,300,0,o),fs,300).magnitude,Math.SQRT1_2,1e-9);});
 test('Butterworth matches closed-form prewarped gain',()=>{for(let o=1;o<=8;o++)for(const mode of ['low','high'])for(const f of [10,128,500,1000,1900]){const r=Math.tan(Math.PI*f/fs)/Math.tan(Math.PI*300/fs);near(a.response(a.design(fs,mode,300,0,o),fs,f).magnitude,1/Math.sqrt(1+(mode==='low'?r:1/r)**(2*o)),1e-8);}});
 test('all Butterworth poles strictly stable over supported range',()=>{for(const fs of [1000,4000,44100,48000])for(const f of [10,fs/4,fs/2-5])for(let o=1;o<=8;o++)for(const mode of ['low','high'])assert.ok(a.poleZero(a.design(fs,mode,f,0,o)).poles.every(p=>Math.hypot(p.re,p.im)<1));});
@@ -34,7 +34,7 @@ test('full-bin reconstruction and nonincreasing error',()=>{const x=d.generate({
 test('linear convolution known example and impulse',()=>{assert.deepEqual(a.convolve([1,2,3],[1,2]),Float64Array.of(1,4,7,6));assert.deepEqual(a.convolve([1],[4,5]),Float64Array.of(4,5));assert.throws(()=>a.convolve([], [1]));});
 test('convolution commutativity and output sum',()=>{const x=[2,-1,4],h=[.5,.25,.25];assert.deepEqual(a.convolve(x,h),a.convolve(h,x));near(a.convolve(x,h).reduce((s,v)=>s+v,0),5);});
 
-const Academy = require('./academy.js');
+const Academy = require('../../src/academy/academy.js');
 const academyTest = require('node:test');
 const academyAssert = require('node:assert/strict');
 for(const lab of Academy.labs){academyTest(`Academy: ${lab.id} fixed experiment matches theory`,()=>{const r=Academy.run(lab.id);academyAssert.ok(r.error<1e-9,JSON.stringify(r));academyAssert.equal(Academy.check(lab.id,lab.expected),true);academyAssert.equal(Academy.check(lab.id,lab.expected+1),false);});}

@@ -29,14 +29,17 @@ PASS five modules at 390px
 PASS zero uncaught JS errors
 ```
 
-## Pending hosted checks
-The runtime blocked navigation to a real localhost server (`ERR_BLOCKED_BY_ADMINISTRATOR`). A hosted-mode test has been prepared and configured in GitHub Actions; it asserts reload persistence and starts/stops a **synthetic** microphone on localhost. It has not been executed successfully yet. Physical microphone, cross-browser support, prolonged browser performance, formal accessibility/security audits, remote CI and Pages hosting remain unverified.
+## Original local limitations (historical)
+The runtime blocked navigation to a real localhost server (`ERR_BLOCKED_BY_ADMINISTRATOR`). A hosted-mode test has been prepared and configured in GitHub Actions; it asserts reload persistence and starts/stops a **synthetic** microphone on localhost. At the time of this local report it had not been executed successfully. Physical microphone, cross-browser support, prolonged browser performance, formal accessibility/security audits, remote CI and Pages hosting remain unverified.
 
 ## Reproduce
 ```sh
-node --test test.cjs
-node tests/benchmark.cjs
+npm test
+npm run benchmark
 python -m pip install playwright==1.51.0
 python -m playwright install chromium
-python tests/browser_smoke.py --hosted
+python tests/e2e/browser_smoke.py --hosted
 ```
+
+## Remote baseline
+[PR #1, GitHub Actions run #4](https://github.com/DanoV1m/SignalLab/actions/runs/46005046497): 40/40 numerical tests and 12 hosted Chromium checks; both jobs passed, including reload persistence and synthetic microphone. This evidence applies to the original V2.0, not the refactor. Physical microphone and cross-browser remain open.
