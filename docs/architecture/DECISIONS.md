@@ -10,7 +10,6 @@
 | ADR-006 | Lazy instrument-specific analysis | Avoid STFT, response and reconstruction when hidden | Shared metrics still compute; no worker thread |
 | ADR-007 | Modular source plus deterministic portable HTML | Static hosting and offline delivery | Tracked example must match generated output |
 | ADR-008 | Ubuntu 24.04 pinned in CI | Baseline Playwright 1.51 installation failed on Ubuntu 26.04; fixed run #4 passed | Upgrade runner and Playwright together after validation |
+| ADR-009 | Bounded DOM-free session caches and sliding-sum moving average | Eliminate redundant numerical work on unchanged inputs; preserve full linear convolution tail | Immutable sample ownership contract; floating-point rounding can differ; no cross-frame microphone reuse |
 
 These decisions describe implemented functionality. Alternatives are not represented as complete.
-
-| ADR-009 | Bounded DOM-free session caches and sliding-sum moving average | Eliminate redundant numerical work on unchanged inputs; preserve full linear convolution tail | Immutable sample ownership contract; floating-point rounding can differ; no cross-frame microphone reuse |

@@ -4,6 +4,7 @@
 - Extract bounded DOM-free session model with independent source, analysis and math caches.
 - Use linear-time full moving-average convolution; retain general convolution as reference.
 - Add six unit tests, browser invalidation checks and performance baseline documentation.
+- Refine instrument surfaces, metric hierarchy and navigation in both themes; collect actual filter/math screenshots and paired cache timings.
 
 ## Unreleased — filter research extension
 - Add analytic SOS group-delay instrument with singularity handling and SciPy comparisons.
