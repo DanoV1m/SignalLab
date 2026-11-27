@@ -18,7 +18,7 @@ server=None
 if args.hosted:
  server=ThreadingHTTPServer(("127.0.0.1",0),partial(SimpleHTTPRequestHandler,directory=str(root if args.modular else build.parent)))
  threading.Thread(target=server.serve_forever,daemon=True).start()
- url=f"http://127.0.0.1:{server.server_port}/"
+ url=f"http://127.0.0.1:{server.server_port}/" + ("web/" if args.modular else "")
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or None,args=['--no-sandbox','--disable-dev-shm-usage','--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream'])
  c=b.new_context(viewport={'width':1440,'height':1000},accept_downloads=True,permissions=['microphone']); page=c.new_page(); errors=[]; page.on('pageerror',lambda e:errors.append(str(e)))

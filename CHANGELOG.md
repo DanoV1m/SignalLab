@@ -1,7 +1,7 @@
 # Changelog
 
 ## Unreleased — repository engineering
-- Organized numerical, academy, UI and style modules; root static entry point retained.
+- Organized numerical, academy, UI and style modules; all tracked HTML grouped in web/; the deterministic build emits dist/index.html.
 - Added build parity tests and browser checks of both distributions.
 - Expanded engineering documentation and diagrams. No deployment.
 

@@ -37,7 +37,6 @@ SignalLab/
 │   ├── experiments/       Guided lab methodology
 │   ├── quality/           Test traceability and acceptance gate
 │   └── reference/         Numerical API contracts
-├── examples/portable/     Standalone HTML distribution
 ├── scripts/               Deterministic build
 ├── src/
 │   ├── academy/           Fixed experiments and reports
@@ -48,7 +47,9 @@ SignalLab/
 │   ├── e2e/               Hosted browser tests
 │   ├── performance/       Repeatable numerical workload
 │   └── unit/              DSP and build regression tests
-├── index.html             Static-site entry point
+├── web/                   All tracked HTML pages
+│   ├── index.html         Modular application entry point
+│   └── portable/          Standalone HTML distribution
 └── package.json           Developer commands (no runtime dependencies)
 ```
 
@@ -60,7 +61,7 @@ cd SignalLab
 python -m http.server 8000
 ```
 
-Open http://localhost:8000. For offline use, open [the portable HTML source](examples/portable/SignalLab.html) locally. Microphone access requires permission and a secure origin such as localhost or HTTPS. The public live-demo URL is not yet verified.
+Open http://localhost:8000/web/. For offline use, open [the portable HTML source](web/portable/SignalLab.html) locally. Microphone access requires permission and a secure origin such as localhost or HTTPS. For future hosting, publish the generated dist/index.html artifact as the site root, only after owner approval. The public live-demo URL is not yet verified.
 
 ```sh
 npm test          # numerical and structural tests; Node 22+

@@ -29,7 +29,7 @@ flowchart LR
 | Advanced DSP | src/dsp/advanced.js | Filter coefficients, response, roots, reconstruction and convolution |
 | Academy | src/academy/academy.js | Fixed IDs, presets, expected values, predictions and report |
 | UI | src/ui/app.js, academy-ui.js, workspace.js | Input lifecycle, DOM events, rendering, navigation and progress |
-| Presentation | index.html, src/styles/workspace.css | Controls, layout, themes and canvases |
+| Presentation | web/index.html, src/styles/workspace.css | Controls, layout, themes and canvases |
 
 Runtime scripts use an ordered classic-script interface; numerical modules expose CommonJS exports for testing. This is not a framework-based application or worker-based streaming pipeline.
 
@@ -82,7 +82,7 @@ Conceptual state model, not a separate state-machine library. Epoch/token checks
 
 ```mermaid
 flowchart LR
-    A[index.html and source modules] --> B[Deterministic Node build]
+    A[web/index.html and source modules] --> B[Deterministic Node build]
     B --> C[Portable HTML]
     A --> D[Node regression and layout tests]
     C --> E[Hosted Chromium: portable]

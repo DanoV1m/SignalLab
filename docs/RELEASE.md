@@ -10,7 +10,7 @@
 - [ ] Verify modular and portable browser modes.
 - [ ] Obtain approval to merge; retain history.
 - [ ] Decide license with owner.
-- [ ] Obtain approval before activating public hosting. Suggested Pages source: main / root. Verify live URL and HTTPS microphone permissions; integrate into portfolio with separate approval.
+- [ ] Obtain approval before activating public hosting. Suggested Pages source: GitHub Actions publishing the generated dist/ directory. All tracked HTML lives in web/; the build creates dist/index.html at the site root. No deploy workflow is enabled. Verify live URL and HTTPS microphone permissions; integrate into portfolio with separate approval.
 - [ ] Physical microphone, cross-browser and prolonged UI validation.
 
 CI builds a static artifact and screenshots, not a deployment.
