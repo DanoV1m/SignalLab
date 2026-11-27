@@ -12,10 +12,25 @@ function design(fs,mode,fc,fc2,order=2){
 }
 function apply(x,sections){let y=Float64Array.from(x);for(const {a,b} of sections){let z1=0,z2=0;y=Float64Array.from(y,v=>{const out=b[0]*v+z1;z1=b[1]*v-a[1]*out+z2;z2=(b[2]||0)*v-(a[2]||0)*out;return out;});}return y;}
 function response(sections,fs,f){const w=2*Math.PI*f/fs;let re=1,im=0;for(const {a,b} of sections){const evalP=p=>p.reduce((s,v,i)=>[s[0]+v*Math.cos(w*i),s[1]-v*Math.sin(w*i)],[0,0]);const [br,bi]=evalP(b),[ar,ai]=evalP(a),den=ar*ar+ai*ai,rr=(br*ar+bi*ai)/den,ri=(bi*ar-br*ai)/den;[re,im]=[re*rr-im*ri,re*ri+im*rr];}return {f,magnitude:Math.hypot(re,im),phase:Math.atan2(im,re)};}
+// Analytic group delay in samples: -d arg H / d omega, summed over sections.
+function groupDelay(sections,fs,f){
+ if(!Number.isFinite(fs)||fs<=0||!Number.isFinite(f)||f<0||f>fs/2)throw Error('Invalid group delay frequency');
+ const w=2*Math.PI*f/fs;
+ function ratio(p){
+  let re=0,im=0,nr=0,ni=0,scale=0;
+  for(let k=0;k<p.length;k++){const r=p[k]*Math.cos(k*w),i=-p[k]*Math.sin(k*w);re+=r;im+=i;nr+=k*r;ni+=k*i;scale+=Math.abs(p[k]);}
+  const power=re*re+im*im;
+  if(!Number.isFinite(power)||scale===0||power<=(1e-12*scale)**2)return null;
+  return (nr*re+ni*im)/power;
+ }
+ let samples=0;
+ for(const {a,b} of sections){const numerator=ratio(b),denominator=ratio(a);if(numerator===null||denominator===null)return null;samples+=numerator-denominator;}
+ return Number.isFinite(samples)?samples:null;
+}
 function roots(p){if(p.length===2)return [{re:-p[1]/p[0],im:0}];const b=p[1]/p[0],c=p[2]/p[0],d=b*b-4*c;return d>=0?[{re:(-b+Math.sqrt(d))/2,im:0},{re:(-b-Math.sqrt(d))/2,im:0}]:[{re:-b/2,im:Math.sqrt(-d)/2},{re:-b/2,im:-Math.sqrt(-d)/2}];}
 function poleZero(s){return {poles:s.flatMap(v=>roots(v.a)),zeros:s.flatMap(v=>roots(v.b))};}
 // Inverse complex DFT using two real forward FFTs; conjugate trick.
 function ifft(re,im){if(re.length!==im.length)throw Error('Mismatched spectra');const a=DSP.fft(re),b=DSP.fft(im),n=re.length;return {re:Float64Array.from(re,(_,i)=>(a.re[i]+b.im[i])/n),im:Float64Array.from(im,(_,i)=>(b.re[i]-a.im[i])/n)};}
 function reconstruct(x,keep){const n=x.length;if(!Number.isInteger(keep)||keep<1||keep>n/2+1)throw Error('Invalid retained bin count');const {re,im}=DSP.fft(x);const bins=Array.from({length:n/2+1},(_,k)=>({k,energy:(re[k]**2+im[k]**2)*(k===0||k===n/2?1:2)})).sort((a,b)=>b.energy-a.energy||a.k-b.k);const selected=new Set(bins.slice(0,keep).map(v=>v.k));for(let k=0;k<n;k++)if(!selected.has(Math.min(k,n-k)))re[k]=im[k]=0;return {samples:ifft(re,im).re,bins:[...selected].sort((a,b)=>a-b)};}
 function convolve(x,h){if(!x.length||!h.length)throw Error('Empty convolution input');const y=new Float64Array(x.length+h.length-1);for(let i=0;i<x.length;i++)for(let j=0;j<h.length;j++)y[i+j]+=x[i]*h[j];return y;}
-return {design,apply,response,poleZero,ifft,reconstruct,convolve};});
+return {design,apply,response,groupDelay,poleZero,ifft,reconstruct,convolve};});

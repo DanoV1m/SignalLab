@@ -38,3 +38,7 @@ flowchart TD
 ## Performance and threat review (limited)
 
 V2.0 separates analyzer, filter and mathematics drawing. Inactive instrument computations are skipped; common waveform and spectra remain computed. Input and resize events coalesce per animation frame. Imported filenames and student notes are not inserted as executable HTML. Microphone and audio import are local, asynchronous source transitions invalidate stale requests, and microphone tracks are stopped on pagehide. Limits on encoded file bytes and decoded samples reduce retained allocation but cannot prevent decoder allocation before validation. No third-party scripts are loaded. This is a targeted code review, not a penetration test or formal security audit.
+
+## Group delay
+
+For normalized angular frequency ω = 2πf/fs, group delay in samples is −d arg H/dω. For H = B/A, the implementation computes Re(Σ k b[k] e^(−jkω)/B − Σ k a[k] e^(−jkω)/A) for each section, then sums sections. Convert to milliseconds via 1000/fs. Section response near zero is undefined or numerically ill-conditioned; the plot additionally omits gain below 1e-8. This is signal-envelope delay, not wall-clock runtime.

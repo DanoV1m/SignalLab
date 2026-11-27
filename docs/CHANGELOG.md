@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — filter research extension
+- Add analytic SOS group-delay instrument with singularity handling and SciPy comparisons.
+- Add five unit tests and browser regression of the delay visualization.
+- Add synthetic cross-browser checks and timed browser rendering evidence (not interaction latency).
+
 ## Unreleased — Excellence Board V2 research instruments
 - Add periodic Hamming and Blackman windows to FFT and STFT; verify against SciPy.
 - Add three window regressions and current-head numerical benchmark artifact.

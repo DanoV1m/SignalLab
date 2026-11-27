@@ -5,11 +5,11 @@ The JavaScript runtime remains dependency-free. NumPy and SciPy are test-only re
 | Model | Cases | Acceptance |
 | --- | ---: | --- |
 | FFT/IFFT and normalized spectra | 12 | Complex coefficients, real reconstruction, imaginary residual, rectangular and periodic Hann, Hamming and Blackman amplitude |
-| Butterworth low/high | 32 | Orders 1–8 at two sample rates; time-domain SOS output and complex response |
+| Butterworth low/high | 32 | Orders 1–8 at two sample rates; time-domain SOS output, complex response and group delay |
 | Cascaded band-pass | 6 | Orders 2, 4 and 8 per edge; reference is a high-pass then low-pass cascade, not canonical bandpass |
 | Linear convolution | 3 | Finite full convolution including the tail |
 
-The harness uses fixed seed 2026, checks shapes and finite values, compares 163 output groups (84 FFT, 76 filter, 3 convolution), and separately checks all digital filter poles are inside the unit circle. Absolute tolerances range from 1e-10 to 2e-9; specified relative tolerance applies to FFT and filters. Actual maximum errors and dependency versions are generated in the JSON artifact. Do not claim results until the corresponding commit's CI has passed.
+The harness uses fixed seed 2026, checks shapes and finite values, compares 201 output groups (84 FFT, 114 filter, 3 convolution), and separately checks all digital filter poles are inside the unit circle. Absolute tolerances range from 1e-10 to 2e-9; specified relative tolerance applies to FFT and filters. Group delay compares SciPy's section-wise group_delay away from endpoints and deep stopbands (gain > 1e-6), with absolute tolerance 2e-8 samples and relative tolerance 1e-8. Actual maximum errors and dependency versions are generated in the JSON artifact. Do not claim results until the corresponding commit's CI has passed.
 
 ## Reproduce
 

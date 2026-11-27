@@ -14,7 +14,7 @@
 | --- | --- |
 | Overview dashboard | Sample source, dominant FFT bin, RMS and learning progress |
 | Signal analyzer | Waveform synthesis, noise, FFT magnitude/phase, four analysis windows, STFT, cursors, aliasing and Gibbs |
-| Filter design | Butterworth low/high pass (orders 1–8), cascaded band pass, Bode and z-plane stability |
+| Filter design | Butterworth low/high pass (orders 1–8), cascaded band pass, Bode, group delay and z-plane stability |
 | Signal mathematics | Complex IFFT, spectral reconstruction, linear convolution and RMSE |
 | Engineering academy | Six guided experiments, predictions, hints and exportable reports |
 
@@ -95,6 +95,8 @@ Baseline remote evidence: [GitHub Actions run #4](https://github.com/DanoV1m/Sig
 The Excellence Board revision adds an independent NumPy/SciPy test harness (53 deterministic cases) and five public-input contract tests. See [scientific validation](docs/quality/SCIENTIFIC_VALIDATION.md) for the reference model, tolerances, commands and generated evidence. Runtime remains dependency-free; reference dependencies are test-only. New CI results must be verified on the revision commit.
 
 The [Engineering Excellence Board review](docs/quality/EXCELLENCE_REVIEW.md) records a provisional evidence-weighted baseline, cross-functional trade-offs and prioritized roadmap. It is not an external certification.
+
+The filter research extension adds analytic group delay, independently compared section-by-section against SciPy. Browser checks report synthetic rendering time separately from numerical workload; cross-browser synthetic checks do not establish microphone compatibility.
 
 ## 07 / Documentation and development
 

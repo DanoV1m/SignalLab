@@ -14,6 +14,7 @@ Frequencies are in Hz, time in seconds, and digital filter gains dimensionless. 
 | AdvancedDSP.design(fs, mode, fc, fc2, order) | none/low/high/band; valid edges below Nyquist; order 1–8 | Cascaded section coefficients |
 | AdvancedDSP.apply(x, sections) | Record and sections | Filtered record, zero initial state |
 | AdvancedDSP.response(sections, fs, f) | Sections and frequency | Complex response, magnitude and phase |
+| AdvancedDSP.groupDelay(sections, fs, f) | Valid rate and frequency in [0, fs/2] | Delay in samples, or null near singular section response |
 | AdvancedDSP.poleZero(sections) | Section coefficients | Pole and zero coordinates |
 | AdvancedDSP.ifft(re, im) | Equal-length power-of-two spectra | Complex inverse DFT arrays |
 | AdvancedDSP.reconstruct(x, keep) | Real record, 1 to N/2+1 groups | Reconstructed samples and retained bins |

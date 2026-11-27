@@ -60,6 +60,12 @@ for c, r in zip(cases, results):
         measured = np.array([v["magnitude"]*np.exp(1j*v["phase"]) for v in r["response"]])
         compare("Filter complex frequency response", measured, h, 1e-9, 1e-9)
         assert all(np.hypot(p["re"],p["im"]) < 1 for p in r["poles"])
+        # Compare section-by-section away from endpoints and deep stopbands, avoiding ill-conditioned high-order polynomials.
+        freq = np.array(c["freqs"])
+        mask = (freq > 0) & (freq < fs/2) & (np.abs(h) > 1e-6)
+        omega = 2*np.pi*freq[mask]/fs
+        expected_delay = sum(signal.group_delay((sec[:3],sec[3:]), w=omega)[1] for sec in sos)
+        compare("Group delay samples", np.array(r["delay"],dtype=float)[mask], expected_delay, 2e-8, 1e-8)
     else:
         compare("Linear convolution", r, np.convolve(x,c["h"]), 1e-10)
 report = dict(cases=len(cases), comparisons=sum(counts.values()), numpy=np.__version__, scipy=scipy.__version__, max_absolute_error=errors, comparisons_by_metric=counts)
