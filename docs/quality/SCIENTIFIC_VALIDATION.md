@@ -19,3 +19,6 @@ npm run reference
 ```
 
 This is a selected numerical verification grid, not exhaustive validation, instrument calibration, or a claim of equivalence for every possible input. See [API contracts](../reference/DSP_API.md) and [verification strategy](TEST_MATRIX.md).
+
+## Research extension
+Adds 12 FIR cases × four comparisons, 12 leakage cases and three SNR cases: 27 additional cases and 63 comparisons, for 80 cases and 264 comparisons in total. FIR uses symmetric window definitions, spectral leakage uses periodic windows. Results are verified on the current commit, not inferred from prior runs.

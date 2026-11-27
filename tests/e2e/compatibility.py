@@ -46,6 +46,7 @@ try:
   page.locator('[data-nav=analyze]').click();page.locator('#window').select_option('blackman');page.wait_for_timeout(150)
   assert 'frames' in page.locator('#stftInfo').inner_text()
   page.locator('[data-nav=filter]').click();page.locator('#presetFilter').click();assert 'Group delay at' in page.locator('#groupDelayInfo').inner_text()
+  page.locator('#firWindow').select_option('blackman'); assert '31 taps' in page.locator('#firInfo').inner_text(); assert '%' in page.locator('#leak-blackman').inner_text()
   page.set_viewport_size({'width':390,'height':844})
   for mod in ['dashboard','analyze','filter','math','academy']:
    page.locator(f'[data-nav={mod}]').click();page.wait_for_timeout(100)

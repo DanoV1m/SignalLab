@@ -23,6 +23,14 @@ for fs in (1000, 16000):
         cases.append(dict(kind="filter", fs=fs, mode="band", fc=fs*.10, fc2=fs*.30, order=order, x=x, freqs=freqs))
 for n, m in ((3, 2), (64, 17), (257, 33)):
     cases.append(dict(kind="convolution", x=rng.normal(size=n).tolist(), h=rng.normal(size=m).tolist()))
+for taps in (15, 31, 63):
+    for window in ("rect","hann","hamming","blackman"):
+        cases.append(dict(kind="fir",fs=4096,fc=512,taps=taps,window=window,x=rng.normal(size=256).tolist(),freqs=np.linspace(0,2048,129).tolist()))
+for binpos in (64,64.25,64.5):
+    for window in ("rect","hann","hamming","blackman"):
+        cases.append(dict(kind="leakage",bin=binpos,window=window,x=np.sin(2*np.pi*binpos*np.arange(1024)/1024).tolist()))
+for ratio in (.25,1,4):
+    cases.append(dict(kind="snr",x=np.sin(2*np.pi*np.arange(256)/16).tolist(),noise=(ratio*np.cos(2*np.pi*np.arange(256)/8)).tolist()))
 raw = subprocess.run(["node", str(ROOT/"tests/reference/bridge.cjs")], input=json.dumps(cases), text=True, capture_output=True, check=True, cwd=ROOT)
 results = json.loads(raw.stdout)
 assert len(results) == len(cases)
@@ -66,6 +74,22 @@ for c, r in zip(cases, results):
         omega = 2*np.pi*freq[mask]/fs
         expected_delay = sum(signal.group_delay((sec[:3],sec[3:]), w=omega)[1] for sec in sos)
         compare("Group delay samples", np.array(r["delay"],dtype=float)[mask], expected_delay, 2e-8, 1e-8)
+    elif c["kind"] == "fir":
+        window = "boxcar" if c["window"] == "rect" else c["window"]
+        h = signal.firwin(c["taps"],c["fc"],fs=c["fs"],window=window)
+        compare("FIR coefficients",r["h"],h,1e-12)
+        compare("FIR step",r["step"],np.cumsum(h),1e-12)
+        _,response=signal.freqz(h,worN=np.array(c["freqs"]),fs=c["fs"])
+        compare("FIR complex response",np.array([v["re"]+1j*v["im"] for v in r["response"]]),response,1e-11)
+        compare("FIR full convolution",r["y"],np.convolve(x,h),1e-11)
+    elif c["kind"] == "leakage":
+        window = "boxcar" if c["window"] == "rect" else c["window"]
+        p = np.abs(np.fft.fft(x*signal.get_window(window,len(x),fftbins=True)))**2
+        k=np.arange(len(x));b=c["bin"]
+        mask=np.minimum(np.abs(k-b),np.abs(k-(len(x)-b)))>4
+        compare("Leakage fraction",r,p[mask].sum()/p.sum(),1e-12)
+    elif c["kind"] == "snr":
+        compare("Known component SNR",r,10*np.log10(np.sum(x*x)/np.sum(np.array(c["noise"])**2)),1e-11)
     else:
         compare("Linear convolution", r, np.convolve(x,c["h"]), 1e-10)
 report = dict(cases=len(cases), comparisons=sum(counts.values()), numpy=np.__version__, scipy=scipy.__version__, max_absolute_error=errors, comparisons_by_metric=counts)

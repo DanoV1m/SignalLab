@@ -1,9 +1,13 @@
 'use strict';
 const fs=require('node:fs'),D=require('../../src/dsp/dsp.js'),A=require('../../src/dsp/advanced.js');
+const R=require('../../src/dsp/research.js');
 const request=JSON.parse(fs.readFileSync(0,'utf8'));
 const result=request.map(c=>{
  if(c.kind==='fft'){const z=D.fft(c.x),inv=A.ifft(z.re,z.im);return {re:Array.from(z.re),im:Array.from(z.im),inverse:Array.from(inv.re),inverseIm:Array.from(inv.im),spectra:['rect','hann','hamming','blackman'].map(w=>D.spectrum(c.x,c.fs,w).map(v=>v.a))};}
  if(c.kind==='filter'){const s=A.design(c.fs,c.mode,c.fc,c.fc2,c.order);return {y:Array.from(A.apply(c.x,s)),response:c.freqs.map(f=>A.response(s,c.fs,f)),poles:A.poleZero(s).poles,delay:c.freqs.map(f=>A.groupDelay(s,c.fs,f))};}
+ if(c.kind==='fir'){const h=R.firLowpass(c.fs,c.fc,c.taps,c.window);return {h:Array.from(h),step:Array.from(R.step(h)),response:c.freqs.map(f=>R.firResponse(h,c.fs,f)),y:Array.from(A.convolve(c.x,h))};}
+ if(c.kind==='leakage')return R.leakage(c.x,c.bin,c.window);
+ if(c.kind==='snr')return R.snr(c.x,c.noise);
  if(c.kind==='convolution')return Array.from(A.convolve(c.x,c.h));
  throw Error('Unknown reference case');
 });

@@ -37,3 +37,5 @@ All current jobs must succeed for the current PR head. Do not merge on stale sta
 See [scientific validation](SCIENTIFIC_VALIDATION.md) for tolerances and the generated reference report.
 
 Canvas presentation: two Node cache-key tests and hosted browser assertions for unchanged, parameter and theme rendering. Paired forced/reused canvas measurements are diagnostic, not hard timing gates.
+
+Research laboratory: six unit checks, 27 independent reference cases and two browser checks per hosted distribution, plus synthetic cross-browser selection. See [research methodology](../experiments/RESEARCH_LAB.md).

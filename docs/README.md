@@ -6,6 +6,7 @@
 | [Design decisions](architecture/DECISIONS.md) | Why vanilla JavaScript, SOS, static hosting and reproducible experiments |
 | [Engineering theory](ENGINEERING.md) | Equations and conditions of validity |
 | [DSP API](reference/DSP_API.md) | Module interfaces and numerical conventions |
+| [FIR and spectral research lab](experiments/RESEARCH_LAB.md) | Windowed-sinc design, response, known-component SNR and leakage |
 | [Experiment handbook](experiments/README.md) | Six guided experiments and expected outcomes |
 | [Verification](VERIFICATION.md) | Historical measured results and remote evidence |
 | [Excellence Board review](quality/EXCELLENCE_REVIEW.md) | Evidence-weighted baseline scorecard, trade-offs and roadmap |

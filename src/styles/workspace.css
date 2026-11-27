@@ -30,3 +30,5 @@ body{font:14px/1.6 system-ui,sans-serif}header{padding:18px max(24px,3vw);backgr
 .module-nav button[aria-current=page]{font-weight:700}
 @media(max-width:540px){.instrument-facts{gap:6px}.instrument-facts>div{padding:9px 7px}.instrument-facts strong{font-size:20px}.instrument-facts span{font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+
+.research-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.research-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}.research-table th,.research-table td{text-align:left;padding:9px;border-bottom:1px solid var(--line)}.research-table td{text-align:right;color:var(--cyan)}@media(max-width:540px){.research-metrics{grid-template-columns:1fr}}

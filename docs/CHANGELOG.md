@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — advanced DSP research laboratory
+- Add independent windowed-sinc FIR low-pass, impulse/step and fourth-order Butterworth comparison.
+- Add known-component SNR and fixed-band spectral leakage measurements.
+- Add six unit tests, 27 reference cases and browser regressions.
+
 ## Unreleased — professional instrument presentation
 - Extract Cartesian canvas rendering into an independent UI module with bounded per-canvas keys.
 - Batch grid and marker paths, avoid redundant backing-store resets and skip unchanged math canvases.
