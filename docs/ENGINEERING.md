@@ -17,12 +17,12 @@ flowchart TD
 
 | File | Responsibility |
 | --- | --- |
-| dsp.js | Signal synthesis, radix-2 FFT, magnitude and phase, STFT, statistics |
-| advanced.js | Filter design, SOS application, analytic response, roots, IFFT and convolution |
-| app.js | Input lifecycle, shared numerical record, active-workspace rendering, audio and CSV |
-| workspace.js / workspace.css | Navigation, theme, layout and local preference |
-| academy.js / academy-ui.js | Reproducible experiments, grading, progress and export |
-| test.cjs | Numerical regression suite |
+| src/dsp/dsp.js | Signal synthesis, radix-2 FFT, magnitude and phase, STFT, statistics |
+| src/dsp/advanced.js | Filter design, SOS application, analytic response, roots, IFFT and convolution |
+| src/ui/app.js | Input lifecycle, shared numerical record, active-workspace rendering, audio and CSV |
+| src/ui/workspace.js / src/styles/workspace.css | Navigation, theme, layout and local preference |
+| src/academy/academy.js / src/ui/academy-ui.js | Reproducible experiments, grading, progress and export |
+| tests/unit/dsp.test.cjs | Numerical regression suite |
 
 ## Equations and conditions
 

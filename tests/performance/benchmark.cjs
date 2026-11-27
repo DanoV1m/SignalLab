@@ -2,7 +2,7 @@
 // Repeated numerical workload at the largest exposed record size. No UI timing claims.
 const {performance}=require('node:perf_hooks');
 const assert=require('node:assert/strict');
-const DSP=require('../dsp.js'), A=require('../advanced.js');
+const DSP=require('../../src/dsp/dsp.js'), A=require('../../src/dsp/advanced.js');
 const n=4096,fs=16000,iterations=200;
 const x=DSP.generate({n,fs,f:125,f2:1500,amp2:.6,noise:.1});
 const sections=A.design(fs,'band',200,1800,8), h=new Float64Array(128).fill(1/128);

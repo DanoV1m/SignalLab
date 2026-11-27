@@ -92,7 +92,7 @@ render();
 
 </script><script>
 /* Guided experiments: fixed, reproducible configurations, independent of live controls. */
-(function(root,factory){const api=factory(typeof module==='object'&&module.exports?require('./dsp.js'):root.DSP,typeof module==='object'&&module.exports?require('./advanced.js'):root.AdvancedDSP);if(typeof module==='object'&&module.exports)module.exports=api;else root.Academy=api;})(globalThis,(D,A)=>{
+(function(root,factory){const api=factory(typeof module==='object'&&module.exports?require('../dsp/dsp.js'):root.DSP,typeof module==='object'&&module.exports?require('../dsp/advanced.js'):root.AdvancedDSP);if(typeof module==='object'&&module.exports)module.exports=api;else root.Academy=api;})(globalThis,(D,A)=>{
 'use strict';
 const base={type:'sine',fs:4000,n:1024,freq:250,amp:1,amp2:0,noise:0,window:'rect',filter:'none',freq2:1000,timeSpan:0};
 const signal=p=>D.generate({n:p.n,fs:p.fs,f:p.freq,amp:p.amp,type:p.type,f2:p.freq2,amp2:p.amp2,h:p.harmonics,noise:p.noise});

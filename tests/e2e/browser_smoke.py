@@ -6,17 +6,19 @@ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from functools import partial
 parser=argparse.ArgumentParser()
 parser.add_argument("--hosted",action="store_true",help="Test a real localhost origin (required in CI)")
+parser.add_argument("--modular",action="store_true",help="Serve modular source")
 args=parser.parse_args()
-root=Path(__file__).resolve().parents[1]
+if args.modular and not args.hosted: parser.error("--modular requires --hosted")
+root=Path(__file__).resolve().parents[2]
 build=root/'dist'/'index.html'
 build.parent.mkdir(exist_ok=True)
-subprocess.run(['node',str(root/'build.cjs'),str(build)],check=True)
+subprocess.run(['node',str(root/'scripts'/'build.cjs'),str(build)],check=True)
 html=build.read_text()
 server=None
 if args.hosted:
- server=ThreadingHTTPServer(("127.0.0.1",0),partial(SimpleHTTPRequestHandler,directory=str(build.parent)))
+ server=ThreadingHTTPServer(("127.0.0.1",0),partial(SimpleHTTPRequestHandler,directory=str(root if args.modular else build.parent)))
  threading.Thread(target=server.serve_forever,daemon=True).start()
- url=f"http://127.0.0.1:{server.server_port}/"
+ url=f"http://127.0.0.1:{server.server_port}/" + ("web/" if args.modular else "")
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or None,args=['--no-sandbox','--disable-dev-shm-usage','--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream'])
  c=b.new_context(viewport={'width':1440,'height':1000},accept_downloads=True,permissions=['microphone']); page=c.new_page(); errors=[]; page.on('pageerror',lambda e:errors.append(str(e)))
@@ -27,9 +29,9 @@ with sync_playwright() as p:
  # Instrument wrappers prove hidden work is skipped.
  page.evaluate('''()=>{window.calls={stft:0,response:0,reconstruct:0,convolve:0};for(const [obj,name] of [[DSP,'stft'],[AdvancedDSP,'response'],[AdvancedDSP,'reconstruct'],[AdvancedDSP,'convolve']]){const old=obj[name];obj[name]=(...args)=>{calls[name]++;return old(...args)}};render()}''')
  assert page.evaluate('Object.values(calls).every(x=>x===0)'); print('PASS no hidden DSP work on dashboard',flush=True)
- page.screenshot(path=str(build.parent/'dashboard.png'),full_page=True)
+ page.screenshot(path=str(build.parent/('dashboard-modular.png' if args.modular else 'dashboard-bundled.png')),full_page=True)
  page.locator('[data-nav=analyze]').click(); page.wait_for_timeout(150); assert page.locator('#time').evaluate('(c)=>c.getContext("2d").getImageData(0,0,c.width,c.height).data.some(v=>v!==0)'); page.locator('#presetChirp').click(); assert 'frames' in page.locator('#stftInfo').inner_text(); assert page.evaluate('calls.stft>0 && calls.response===0 && calls.reconstruct===0'); print('PASS analyzer and isolated STFT',flush=True)
- page.screenshot(path=str(build.parent/'analyzer.png'),full_page=True)
+ page.screenshot(path=str(build.parent/('analyzer-modular.png' if args.modular else 'analyzer-bundled.png')),full_page=True)
  page.locator('#themeToggle').click(); page.wait_for_timeout(100); assert page.locator('html').get_attribute('data-theme')=='light'; print('PASS light theme',flush=True)
  page.locator('[data-nav=filter]').click(); page.locator('#presetFilter').click(); assert 'stable' in page.locator('#pzInfo').inner_text(); assert page.evaluate('calls.response>0 && calls.reconstruct===0'); print('PASS filter isolation',flush=True)
  page.locator('[data-nav=math]').click(); page.wait_for_timeout(100); assert 'RMSE' in page.locator('#reconInfo').inner_text(); assert page.evaluate('calls.reconstruct>0 && calls.convolve>0'); print('PASS mathematical tools',flush=True)
