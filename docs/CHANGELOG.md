@@ -1,5 +1,9 @@
 # Changelog
 
+## Documentation organization
+- Consolidated supplementary Markdown in `docs/`; kept the root README for GitHub presentation.
+- Updated relative links and added two automated documentation checks. No runtime or deployment changes.
+
 ## Unreleased — repository engineering
 - Organized numerical, academy, UI and style modules; all tracked HTML grouped in web/; the deterministic build emits dist/index.html.
 - Added build parity tests and browser checks of both distributions.

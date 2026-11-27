@@ -43,3 +43,6 @@ python tests/e2e/browser_smoke.py --hosted
 
 ## Remote baseline
 [PR #1, GitHub Actions run #4](https://github.com/DanoV1m/SignalLab/actions/runs/46005046497): 40/40 numerical tests and 12 hosted Chromium checks; both jobs passed, including reload persistence and synthetic microphone. This evidence applies to the original V2.0, not the refactor. Physical microphone and cross-browser remain open.
+
+## Repository restructuring evidence
+[PR #2, run #11](https://github.com/DanoV1m/SignalLab/actions/runs/46008040139): 43/43 numerical and structural tests, 24/24 hosted Chromium checks across both distributions; merged as 09d5b39. This does not establish physical microphone or cross-browser behavior. The documentation revision introduces two additional tests; refer to its own CI results.

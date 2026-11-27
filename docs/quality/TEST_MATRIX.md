@@ -1,6 +1,6 @@
 # Verification strategy
 
-[GitHub Actions run #4](https://github.com/DanoV1m/SignalLab/actions/runs/46005046497) verified the pre-refactor V2.0: 40 numerical tests, 12 hosted Chromium checks, two jobs passed. See [benchmark](../VERIFICATION.md) for the separate local 200-workload test. The restructuring revision adds three layout/build tests and a second browser mode; results must be verified against its commit.
+[GitHub Actions run #4](https://github.com/DanoV1m/SignalLab/actions/runs/46005046497) verified the pre-refactor V2.0: 40 numerical tests, 12 hosted Chromium checks, two jobs passed. See [benchmark](../VERIFICATION.md) for the separate local 200-workload test. The restructuring revision adds three layout/build tests and a second browser mode; [Run #11](https://github.com/DanoV1m/SignalLab/actions/runs/46008040139) verified all 43 tests and 24 hosted Chromium checks before merging PR #2. The documentation revision adds two checks for Markdown organization and relative link targets; its CI must be verified independently.
 
 | Risk | Automated check | Scope |
 | --- | --- | --- |
@@ -10,6 +10,7 @@
 | Incorrect inverse or convolution | Direct inverse DFT, full-bin reconstruction, convolution fixtures | Numerical |
 | Incorrect learning result | Six fixed experiments, invalid prediction, report contents | Numerical |
 | Directory relocation | Local asset resolution/order, portable build parity, no external runtime assets | Three structural tests |
+| Documentation organization | Root README exception and local Markdown / HTML image link targets | Two documentation tests |
 | Web behavior | Dashboard, isolation, theme, reports, WAV/CSV, mobile, uncaught JS errors | Hosted Chromium |
 | Permissions/persistence | Reload and synthetic microphone start/stop | Hosted Chromium, not physical hardware |
 
