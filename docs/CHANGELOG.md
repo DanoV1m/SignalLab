@@ -3,6 +3,8 @@
 ## Unreleased — Excellence Board scientific validation
 - Reject invalid numerical input and degenerate signal-generator configurations.
 - Clarify that dominant-bin metric excludes DC.
+- Synchronize hint disclosure ARIA state and avoid repeated unchanged status mutations; test keyboard navigation in both browser builds.
+- Document evidence-weighted review and prioritized roadmap.
 - Add independent NumPy/SciPy reference harness and five contract tests. No hosting changes.
 
 ## Documentation organization

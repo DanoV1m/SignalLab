@@ -14,6 +14,7 @@
 | Public numerical contracts | Invalid samples, rate, window and generator configuration | Five unit tests |
 | Independent numerical agreement | NumPy FFT/convolution and SciPy SOS response; 53 seeded cases | Scientific reference job |
 | Web behavior | Dashboard, isolation, theme, reports, WAV/CSV, mobile, uncaught JS errors | Hosted Chromium |
+| Accessible interaction | Keyboard navigation, disclosure state and unchanged live-region updates | Two checks per browser distribution |
 | Permissions/persistence | Reload and synthetic microphone start/stop | Hosted Chromium, not physical hardware |
 
 ## Run
@@ -28,6 +29,6 @@ python tests/e2e/browser_smoke.py --hosted
 python tests/e2e/browser_smoke.py --hosted --modular
 ```
 
-All current jobs must succeed for the current PR head. Do not merge on stale status. CI collects real screenshots as the browser-screenshots artifact. Manual follow-up: physical microphone, Firefox/Safari, prolonged rendering, keyboard/screen-reader audit, and live HTTPS after owner-approved deployment.
+All current jobs must succeed for the current PR head. Do not merge on stale status. CI collects real screenshots as the browser-screenshots artifact. Read [Excellence Board review](EXCELLENCE_REVIEW.md) for review priorities. Manual follow-up: physical microphone, Firefox/Safari, prolonged rendering, keyboard/screen-reader audit, and live HTTPS after owner-approved deployment.
 
 See [scientific validation](SCIENTIFIC_VALIDATION.md) for tolerances and the generated reference report.

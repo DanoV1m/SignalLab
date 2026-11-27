@@ -94,6 +94,8 @@ Baseline remote evidence: [GitHub Actions run #4](https://github.com/DanoV1m/Sig
 
 The Excellence Board revision adds an independent NumPy/SciPy test harness (53 deterministic cases) and five public-input contract tests. See [scientific validation](docs/quality/SCIENTIFIC_VALIDATION.md) for the reference model, tolerances, commands and generated evidence. Runtime remains dependency-free; reference dependencies are test-only. New CI results must be verified on the revision commit.
 
+The [Engineering Excellence Board review](docs/quality/EXCELLENCE_REVIEW.md) records a provisional evidence-weighted baseline, cross-functional trade-offs and prioritized roadmap. It is not an external certification.
+
 ## 07 / Documentation and development
 
 All supplementary Markdown documentation lives under `docs/`; the root README is the only exception. See [web entry points](docs/reference/WEB.md) for browser and build instructions.
