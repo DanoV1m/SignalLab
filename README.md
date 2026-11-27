@@ -90,6 +90,10 @@ See [equations, assumptions and limitations](docs/ENGINEERING.md) and the [DSP A
 
 Baseline remote evidence: [GitHub Actions run #4](https://github.com/DanoV1m/SignalLab/actions/runs/46005046497). Benchmark scope and historical limitations: [verification report](docs/VERIFICATION.md). [Repository restructuring run #11](https://github.com/DanoV1m/SignalLab/actions/runs/46008040139) passed 43 numerical/structural tests and 24 hosted browser checks (12 per distribution). Documentation organization adds two checks for Markdown placement and relative links; see the current PR checks for this revision. Browser screenshots are generated in CI and collected as artifacts.
 
+### Independent scientific reference
+
+The Excellence Board revision adds an independent NumPy/SciPy test harness (53 deterministic cases) and five public-input contract tests. See [scientific validation](docs/quality/SCIENTIFIC_VALIDATION.md) for the reference model, tolerances, commands and generated evidence. Runtime remains dependency-free; reference dependencies are test-only. New CI results must be verified on the revision commit.
+
 ## 07 / Documentation and development
 
 All supplementary Markdown documentation lives under `docs/`; the root README is the only exception. See [web entry points](docs/reference/WEB.md) for browser and build instructions.

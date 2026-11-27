@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — Excellence Board scientific validation
+- Reject invalid numerical input and degenerate signal-generator configurations.
+- Clarify that dominant-bin metric excludes DC.
+- Add independent NumPy/SciPy reference harness and five contract tests. No hosting changes.
+
 ## Documentation organization
 - Consolidated supplementary Markdown in `docs/`; kept the root README for GitHub presentation.
 - Updated relative links and added two automated documentation checks. No runtime or deployment changes.

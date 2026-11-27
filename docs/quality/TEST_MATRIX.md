@@ -11,6 +11,8 @@
 | Incorrect learning result | Six fixed experiments, invalid prediction, report contents | Numerical |
 | Directory relocation | Local asset resolution/order, portable build parity, no external runtime assets | Three structural tests |
 | Documentation organization | Root README exception and local Markdown / HTML image link targets | Two documentation tests |
+| Public numerical contracts | Invalid samples, rate, window and generator configuration | Five unit tests |
+| Independent numerical agreement | NumPy FFT/convolution and SciPy SOS response; 53 seeded cases | Scientific reference job |
 | Web behavior | Dashboard, isolation, theme, reports, WAV/CSV, mobile, uncaught JS errors | Hosted Chromium |
 | Permissions/persistence | Reload and synthetic microphone start/stop | Hosted Chromium, not physical hardware |
 
@@ -26,4 +28,6 @@ python tests/e2e/browser_smoke.py --hosted
 python tests/e2e/browser_smoke.py --hosted --modular
 ```
 
-Both jobs must succeed for the current PR head. Do not merge on stale status. CI collects real screenshots as the browser-screenshots artifact. Manual follow-up: physical microphone, Firefox/Safari, prolonged rendering, keyboard/screen-reader audit, and live HTTPS after owner-approved deployment.
+All current jobs must succeed for the current PR head. Do not merge on stale status. CI collects real screenshots as the browser-screenshots artifact. Manual follow-up: physical microphone, Firefox/Safari, prolonged rendering, keyboard/screen-reader audit, and live HTTPS after owner-approved deployment.
+
+See [scientific validation](SCIENTIFIC_VALIDATION.md) for tolerances and the generated reference report.

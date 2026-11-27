@@ -4,9 +4,9 @@ Frequencies are in Hz, time in seconds, and digital filter gains dimensionless. 
 
 | Function | Input | Output / condition |
 | --- | --- | --- |
-| DSP.fft(real) | Power-of-two real record, N >= 2 | {re, im} DFT coefficient arrays |
-| DSP.spectrum(x, fs, window) | Record, sample rate, rect or hann | One-sided bins with f, a, phase; coherent-gain normalization |
-| DSP.generate(options) | n, fs, f, amp, type, noise, f2, amp2, h, seed | Deterministic Float64Array for given seed |
+| DSP.fft(real) | Finite real power-of-two record, N >= 2 | {re, im} DFT coefficient arrays |
+| DSP.spectrum(x, fs, window) | Finite real record, positive finite sample rate, rect or hann | One-sided bins with f, a, phase; coherent-gain normalization |
+| DSP.generate(options) | n, fs, f, amp, type, noise, f2, amp2, h, seed | Deterministic Float64Array for given seed; n 2–1,048,576, h 1–4095, finite parameters, nonnegative noise, known waveform |
 | DSP.stft(x, fs, size, hop, window) | Power-of-two window fitting record, positive hop | Frames with center time and spectrum |
 | DSP.metrics(x), DSP.rms(x) | Nonempty finite record | Statistics and RMS |
 | DSP.alias(f, fs) | Positive sample rate | Folded frequency in [0, fs/2] |
@@ -18,6 +18,8 @@ Frequencies are in Hz, time in seconds, and digital filter gains dimensionless. 
 | AdvancedDSP.ifft(re, im) | Equal-length power-of-two spectra | Complex inverse DFT arrays |
 | AdvancedDSP.reconstruct(x, keep) | Real record, 1 to N/2+1 groups | Reconstructed samples and retained bins |
 | AdvancedDSP.convolve(x, h) | Two nonempty sequences | N+M-1 output samples |
+
+Invalid FFT/spectrum/STFT input and invalid generator configuration throw explicit errors. Above-Nyquist frequencies remain valid for aliasing experiments. DSP.peak excludes the DC bin; the dashboard label reflects this. Window leakage may still populate non-DC bins.
 
 DSP.filter is an earlier first-order filter retained in the core and regression suite; the application uses AdvancedDSP for Butterworth design. See [engineering notes](../ENGINEERING.md).
 

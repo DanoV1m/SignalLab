@@ -4,10 +4,11 @@
   "private": true,
   "description": "Browser-based DSP engineering workbench",
   "scripts": {
-    "test": "node --test tests/unit/dsp.test.cjs tests/unit/layout.test.cjs tests/unit/docs.test.cjs",
+    "test": "node --test tests/unit/dsp.test.cjs tests/unit/layout.test.cjs tests/unit/docs.test.cjs tests/unit/contracts.test.cjs",
     "build": "node scripts/build.cjs",
     "benchmark": "node tests/performance/benchmark.cjs",
-    "serve": "python -m http.server 8000"
+    "serve": "python -m http.server 8000",
+    "reference": "python tests/reference/compare.py"
   },
   "engines": {
     "node": ">=22"

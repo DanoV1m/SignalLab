@@ -8,6 +8,7 @@
 | [DSP API](reference/DSP_API.md) | Module interfaces and numerical conventions |
 | [Experiment handbook](experiments/README.md) | Six guided experiments and expected outcomes |
 | [Verification](VERIFICATION.md) | Historical measured results and remote evidence |
+| [Scientific validation](quality/SCIENTIFIC_VALIDATION.md) | Independent NumPy/SciPy comparison |
 | [Test strategy](quality/TEST_MATRIX.md) | Test coverage, commands, acceptance gates and limitations |
 | [Portfolio case study](PORTFOLIO.md) | Problem, implementation and outcomes |
 | [Release checklist](RELEASE.md) | Owner approval and publication steps |
