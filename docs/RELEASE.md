@@ -1,11 +1,16 @@
-# Release checklist — V2.0
+# Release checklist
 
-- [x] Create dedicated repository.
-- [x] Prepare release code and test suite.
-- [ ] Review release branch and CI.
-- [ ] Obtain owner approval to merge the reviewed PR.
-- [ ] Select licensing with the owner.
-- [ ] If public hosting is desired, enable GitHub Pages from the approved branch and root; verify actual URL, microphone permissions on HTTPS, theme/progress persistence, audio import and mobile layout.
-- [ ] Obtain separate approval for portfolio integration and add verified demo/repository links.
+## V2.0 baseline
+- [x] Dedicated repository and numerical engine.
+- [x] 40 numerical tests and 12 hosted Chromium checks in [run #4](https://github.com/DanoV1m/SignalLab/actions/runs/46005046497).
+- [x] Owner-approved [PR #1](https://github.com/DanoV1m/SignalLab/pull/1) merged as c5cd3e8.
 
-The test workflow builds a static artifact and tests numerical and hosted browser behavior. It does not deploy. Physical hardware validation remains open.
+## Repository engineering revision
+- [ ] Review restructuring PR and current CI results.
+- [ ] Verify modular and portable browser modes.
+- [ ] Obtain approval to merge; retain history.
+- [ ] Decide license with owner.
+- [ ] Obtain approval before activating public hosting. Suggested Pages source: main / root. Verify live URL and HTTPS microphone permissions; integrate into portfolio with separate approval.
+- [ ] Physical microphone, cross-browser and prolonged UI validation.
+
+CI builds a static artifact and screenshots, not a deployment.
