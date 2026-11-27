@@ -13,7 +13,7 @@
 | Instrument | Engineering scope |
 | --- | --- |
 | Overview dashboard | Sample source, dominant FFT bin, RMS and learning progress |
-| Signal analyzer | Waveform synthesis, noise, FFT magnitude/phase, STFT, cursors, aliasing and Gibbs |
+| Signal analyzer | Waveform synthesis, noise, FFT magnitude/phase, four analysis windows, STFT, cursors, aliasing and Gibbs |
 | Filter design | Butterworth low/high pass (orders 1–8), cascaded band pass, Bode and z-plane stability |
 | Signal mathematics | Complex IFFT, spectral reconstruction, linear convolution and RMSE |
 | Engineering academy | Six guided experiments, predictions, hints and exportable reports |

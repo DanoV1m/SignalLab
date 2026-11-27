@@ -12,6 +12,7 @@
 | Directory relocation | Local asset resolution/order, portable build parity, no external runtime assets | Three structural tests |
 | Documentation organization | Root README exception and local Markdown / HTML image link targets | Two documentation tests |
 | Public numerical contracts | Invalid samples, rate, window and generator configuration | Five unit tests |
+| Spectral windows | Coherent gain, DC, STFT for Hamming and Blackman | Three unit tests |
 | Independent numerical agreement | NumPy FFT/convolution and SciPy SOS response; 53 seeded cases | Scientific reference job |
 | Web behavior | Dashboard, isolation, theme, reports, WAV/CSV, mobile, uncaught JS errors | Hosted Chromium |
 | Accessible interaction | Keyboard navigation, disclosure state and unchanged live-region updates | Two checks per browser distribution |

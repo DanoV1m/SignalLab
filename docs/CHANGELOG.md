@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased — Excellence Board V2 research instruments
+- Add periodic Hamming and Blackman windows to FFT and STFT; verify against SciPy.
+- Add three window regressions and current-head numerical benchmark artifact.
+
 ## Unreleased — Excellence Board scientific validation
 - Reject invalid numerical input and degenerate signal-generator configurations.
 - Clarify that dominant-bin metric excludes DC.

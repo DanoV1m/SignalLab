@@ -12,6 +12,12 @@ jobs:
           node-version: '22'
       - run: npm test
       - run: npm run build
+      - name: Measure numerical workload (not browser latency)
+        run: node tests/performance/benchmark.cjs > dist/numerical-benchmark.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: numerical-benchmark
+          path: dist/numerical-benchmark.json
       - uses: actions/upload-artifact@v4
         with:
           name: signallab-static-site

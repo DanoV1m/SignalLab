@@ -42,8 +42,8 @@ for c, r in zip(cases, results):
         compare("FFT complex coefficients", np.array(r["re"])+1j*np.array(r["im"]), np.fft.fft(x), 2e-9, 1e-11)
         compare("IFFT real reconstruction", r["inverse"], x, 1e-10)
         compare("IFFT imaginary residual", r["inverseIm"], np.zeros_like(x), 1e-10)
-        for w, name in enumerate(("rect", "hann")):
-            window = np.ones(len(x)) if name == "rect" else signal.windows.hann(len(x), sym=False)
+        for w, name in enumerate(("rect", "hann", "hamming", "blackman")):
+            window = np.ones(len(x)) if name == "rect" else getattr(signal.windows, name)(len(x), sym=False)
             amp = 2*np.abs(np.fft.rfft(x*window))/window.sum()
             amp[[0,-1]] /= 2
             compare("Spectrum "+name, r["spectra"][w], amp, 1e-10)
