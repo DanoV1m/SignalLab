@@ -88,10 +88,12 @@ See [equations, assumptions and limitations](docs/ENGINEERING.md) and the [DSP A
 | CI jobs | 2/2 passed |
 | Repeated local numerical workloads | 200/200 finite, reconstruction RMS error below 1e-10 |
 
-Baseline remote evidence: [GitHub Actions run #4](https://github.com/DanoV1m/SignalLab/actions/runs/46005046497). Benchmark scope and historical limitations: [verification report](docs/VERIFICATION.md). The repository restructuring adds three build/layout checks and tests both portable and modular browser distributions; see the **current** PR checks before merging. Browser screenshots are generated in CI and collected as artifacts.
+Baseline remote evidence: [GitHub Actions run #4](https://github.com/DanoV1m/SignalLab/actions/runs/46005046497). Benchmark scope and historical limitations: [verification report](docs/VERIFICATION.md). [Repository restructuring run #11](https://github.com/DanoV1m/SignalLab/actions/runs/46008040139) passed 43 numerical/structural tests and 24 hosted browser checks (12 per distribution). Documentation organization adds two checks for Markdown placement and relative links; see the current PR checks for this revision. Browser screenshots are generated in CI and collected as artifacts.
 
 ## 07 / Documentation and development
 
-Read the [engineering handbook](docs/README.md) for the complete map, [test strategy](docs/quality/TEST_MATRIX.md), [contributing guide](CONTRIBUTING.md), [privacy and security notes](SECURITY.md), [changelog](CHANGELOG.md) and [release checklist](docs/RELEASE.md).
+All supplementary Markdown documentation lives under `docs/`; the root README is the only exception. See [web entry points](docs/reference/WEB.md) for browser and build instructions.
+
+Read the [engineering handbook](docs/README.md) for the complete map, [test strategy](docs/quality/TEST_MATRIX.md), [contributing guide](docs/CONTRIBUTING.md), [privacy and security notes](docs/SECURITY.md), [changelog](docs/CHANGELOG.md) and [release checklist](docs/RELEASE.md).
 
 Physical microphone tests, non-Chromium browsers, prolonged browser workloads and formal accessibility/security audits remain open. No license has been selected. No deployment or portfolio changes are performed by CI.

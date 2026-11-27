@@ -11,5 +11,9 @@
 | [Test strategy](quality/TEST_MATRIX.md) | Test coverage, commands, acceptance gates and limitations |
 | [Portfolio case study](PORTFOLIO.md) | Problem, implementation and outcomes |
 | [Release checklist](RELEASE.md) | Owner approval and publication steps |
+| [Changelog](CHANGELOG.md) | Development history |
+| [Contributing](CONTRIBUTING.md) | Development and testing conventions |
+| [Security](SECURITY.md) | Privacy and reporting |
+| [Web entry points](reference/WEB.md) | Modular and portable HTML, serving and building |
 
 Start with the architecture overview, then follow the theory and experiment handbook. Source code is the authority for implementation details; numerical results are linked to the corresponding test suite.
