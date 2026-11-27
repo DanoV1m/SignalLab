@@ -98,6 +98,8 @@ The [Engineering Excellence Board review](docs/quality/EXCELLENCE_REVIEW.md) rec
 
 The filter research extension adds analytic group delay, independently compared section-by-section against SciPy. Browser checks report synthetic rendering time separately from numerical workload; cross-browser synthetic checks do not establish microphone compatibility.
 
+The session architecture revision separates numerical record ownership from DOM rendering, uses bounded caches and a linear-time moving-average convolution. See [performance methodology](docs/quality/PERFORMANCE.md) for measured baseline and limitations.
+
 ## 07 / Documentation and development
 
 All supplementary Markdown documentation lives under `docs/`; the root README is the only exception. See [web entry points](docs/reference/WEB.md) for browser and build instructions.

@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — session architecture
+- Extract bounded DOM-free session model with independent source, analysis and math caches.
+- Use linear-time full moving-average convolution; retain general convolution as reference.
+- Add six unit tests, browser invalidation checks and performance baseline documentation.
+
 ## Unreleased — filter research extension
 - Add analytic SOS group-delay instrument with singularity handling and SciPy comparisons.
 - Add five unit tests and browser regression of the delay visualization.

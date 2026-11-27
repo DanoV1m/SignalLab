@@ -15,6 +15,7 @@
 | Spectral windows | Coherent gain, DC, STFT for Hamming and Blackman | Three unit tests |
 | Group delay | Bypass, symmetric FIR reference, first-order DC, cascades, invalid domain and SciPy | Five unit tests and reference cases |
 | Independent numerical agreement | NumPy FFT/convolution and SciPy SOS response; 53 seeded cases | Scientific reference job |
+| Session reuse | Source identity, parameter invalidation, independent math caches, direct convolution agreement | Six unit tests and two hosted browser checks per distribution |
 | Web behavior | Dashboard, isolation, theme, reports, WAV/CSV, mobile, uncaught JS errors | Hosted Chromium |
 | Accessible interaction | Keyboard navigation, disclosure state and unchanged live-region updates | Two checks per browser distribution |
 | Permissions/persistence | Reload and synthetic microphone start/stop | Hosted Chromium, not physical hardware |

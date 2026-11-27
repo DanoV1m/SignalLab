@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const styles=['src/styles/workspace.css'];
-const scripts=["src/dsp/dsp.js","src/dsp/advanced.js","src/ui/app.js","src/academy/academy.js","src/ui/academy-ui.js","src/ui/workspace.js"];
+const scripts=["src/dsp/dsp.js","src/dsp/advanced.js","src/dsp/session.js","src/ui/app.js","src/academy/academy.js","src/ui/academy-ui.js","src/ui/workspace.js"];
 function build(){
  let html=fs.readFileSync(path.join(root,'web','index.html'),'utf8');
  function inline(tag,replacement){if(!html.includes(tag))throw Error('Missing asset: '+tag);html=html.replace(tag,()=>replacement);}
