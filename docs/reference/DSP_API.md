@@ -13,12 +13,17 @@ Frequencies are in Hz, time in seconds, and digital filter gains dimensionless. 
 | DSP.db(a, ref, floor) | Amplitude and positive reference | Clipped amplitude dB |
 | AdvancedDSP.design(fs, mode, fc, fc2, order) | none/low/high/band; valid edges below Nyquist; order 1–8 | Cascaded section coefficients |
 | AdvancedDSP.apply(x, sections) | Record and sections | Filtered record, zero initial state |
-| AdvancedDSP.response(sections, fs, f) | Sections and frequency | Complex response, magnitude and phase |
+| AdvancedDSP.response(sections, fs, f) | Sections and frequency | Object with f, magnitude and phase (radians) |
 | AdvancedDSP.groupDelay(sections, fs, f) | Valid rate and frequency in [0, fs/2] | Delay in samples, or null near singular section response |
 | AdvancedDSP.poleZero(sections) | Section coefficients | Pole and zero coordinates |
 | AdvancedDSP.ifft(re, im) | Equal-length power-of-two spectra | Complex inverse DFT arrays |
 | AdvancedDSP.reconstruct(x, keep) | Real record, 1 to N/2+1 groups | Reconstructed samples and retained bins |
 | AdvancedDSP.convolve(x, h) | Two nonempty sequences | N+M-1 output samples |
+| ResearchDSP.firLowpass(fs, fc, taps, w) | Positive fs, 0 < fc < fs/2, odd taps 3–257, known symmetric window | DC-normalized symmetric coefficients |
+| ResearchDSP.firResponse(h, fs, f) | Finite coefficients, valid rate and frequency 0–Nyquist | re, im, magnitude |
+| ResearchDSP.step(h) | Impulse response | Cumulative sum over provided finite record |
+| ResearchDSP.snr(clean, noise) | Equal-length finite nonempty records | Energy ratio dB; null if either energy is zero |
+| ResearchDSP.leakage(x, bin, w, guard) | Power-of-two tone record, positive bin separated from DC/Nyquist by guard, known periodic window | Outside-band energy fraction or null for zero energy |
 
 Invalid FFT/spectrum/STFT input and invalid generator configuration throw explicit errors. Above-Nyquist frequencies remain valid for aliasing experiments. DSP.peak excludes the DC bin; the dashboard label reflects this. Window leakage may still populate non-DC bins.
 

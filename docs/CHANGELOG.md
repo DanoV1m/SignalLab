@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — reliability and research documentation
+- Prevent session cache collisions between omitted and invalid generator parameters.
+- Add two boundary regressions and repeated numerical / browser stress protocols with diagnostic memory snapshots.
+- Record verified baseline, paired rendering evidence, API contracts and four reproducible research investigations.
+
 ## Unreleased — advanced DSP research laboratory
 - Add independent windowed-sinc FIR low-pass, impulse/step and fourth-order Butterworth comparison.
 - Add known-component SNR and fixed-band spectral leakage measurements.

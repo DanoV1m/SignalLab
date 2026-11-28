@@ -132,20 +132,21 @@ function movingAverageFull(x,m){
  }
  return y;
 }
+function sameKey(a,b){return a.length===b.length&&a.every((v,i)=>Object.is(v,b[i]));}
 function createSession(){
  let source=null,record=null,reconstruction=null,convolution=null;
  // Arrays returned by this model are immutable by contract. Do not mutate in the UI.
  function input(options,audio=null,offset=0){
-  const key=audio?JSON.stringify([options.n,offset]):JSON.stringify([options.n,options.fs,options.f,options.amp,options.type,options.noise,options.f2,options.amp2,options.h,options.seed]);
-  if(source&&source.key===key&&source.audio===audio)return source.x;
+  const key=audio?[options.n,offset]:[options.n,options.fs,options.f,options.amp,options.type,options.noise,options.f2,options.amp2,options.h,options.seed];
+  if(source&&sameKey(source.key,key)&&source.audio===audio)return source.x;
   let x;
   if(audio){x=new Float64Array(options.n);x.set(audio.samples.subarray(offset,offset+options.n));}
   else x=DSP.generate(options);
   source={key,audio,x};return x;
  }
  function analyze(x,fs,mode,fc,fc2,order,window){
-  const key=JSON.stringify([fs,mode,fc,fc2,order,window]);
-  if(record&&record.x===x&&record.key===key)return record.value;
+  const key=[fs,mode,fc,fc2,order,window];
+  if(record&&record.x===x&&sameKey(record.key,key))return record.value;
   const sections=AdvancedDSP.design(fs,mode,fc,fc2,order);
   const y=AdvancedDSP.apply(x,sections),s=DSP.spectrum(x,fs,window),sy=DSP.spectrum(y,fs,window);
   const value={x,y,fs,s,sy,sections,peak:DSP.peak(s),rms:DSP.rms(y)};

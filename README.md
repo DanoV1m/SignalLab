@@ -104,6 +104,8 @@ The professional instrument presentation revision separates Cartesian canvas dra
 
 The [advanced research laboratory](docs/experiments/RESEARCH_LAB.md) adds an independent synthetic FIR/IIR comparison with impulse, step, known-component SNR and fixed-band spectral leakage. It does not modify the shared live audio pipeline.
 
+The [reliability protocol](docs/quality/RELIABILITY.md) adds repeated synthetic numerical and browser workloads, diagnostic post-GC memory measurements and explicit acceptance conditions. Evidence is commit-specific; physical hardware and long-duration soak testing remain open.
+
 ## 07 / Documentation and development
 
 All supplementary Markdown documentation lives under `docs/`; the root README is the only exception. See [web entry points](docs/reference/WEB.md) for browser and build instructions.

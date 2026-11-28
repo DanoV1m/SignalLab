@@ -14,7 +14,7 @@
 | Public numerical contracts | Invalid samples, rate, window and generator configuration | Five unit tests |
 | Spectral windows | Coherent gain, DC, STFT for Hamming and Blackman | Three unit tests |
 | Group delay | Bypass, symmetric FIR reference, first-order DC, cascades, invalid domain and SciPy | Five unit tests and reference cases |
-| Independent numerical agreement | NumPy FFT/convolution and SciPy SOS response; 53 seeded cases | Scientific reference job |
+| Independent numerical agreement | NumPy FFT/convolution and SciPy SOS response; 80 seeded cases | Scientific reference job |
 | Session reuse | Source identity, parameter invalidation, independent math caches, direct convolution agreement | Six unit tests and two hosted browser checks per distribution |
 | Web behavior | Dashboard, isolation, theme, reports, WAV/CSV, mobile, uncaught JS errors | Hosted Chromium |
 | Accessible interaction | Keyboard navigation, disclosure state and unchanged live-region updates | Two checks per browser distribution |
@@ -32,10 +32,12 @@ python tests/e2e/browser_smoke.py --hosted
 python tests/e2e/browser_smoke.py --hosted --modular
 ```
 
-All current jobs must succeed for the current PR head. Do not merge on stale status. CI collects real screenshots as the browser-screenshots artifact. Read [Excellence Board review](EXCELLENCE_REVIEW.md) for review priorities. Manual follow-up: physical microphone, Firefox/Safari, prolonged rendering, keyboard/screen-reader audit, and live HTTPS after owner-approved deployment.
+All current jobs must succeed for the current PR head. Do not merge on stale status. CI collects real screenshots as the browser-screenshots artifact. Read [Excellence Board review](EXCELLENCE_REVIEW.md) for review priorities. Manual follow-up: physical microphone, full Firefox/WebKit workflows beyond synthetic coverage, all-day rendering, keyboard/screen-reader audit, and live HTTPS after owner-approved deployment.
 
 See [scientific validation](SCIENTIFIC_VALIDATION.md) for tolerances and the generated reference report.
 
 Canvas presentation: two Node cache-key tests and hosted browser assertions for unchanged, parameter and theme rendering. Paired forced/reused canvas measurements are diagnostic, not hard timing gates.
 
 Research laboratory: six unit checks, 27 independent reference cases and two browser checks per hosted distribution, plus synthetic cross-browser selection. See [research methodology](../experiments/RESEARCH_LAB.md).
+
+The reliability job introduces repeated numerical and Chromium UI workloads, post-GC diagnostic snapshots and two cache-boundary tests. See [reliability protocol](RELIABILITY.md). Current-head CI success remains mandatory.

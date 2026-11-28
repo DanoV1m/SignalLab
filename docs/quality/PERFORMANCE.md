@@ -18,3 +18,6 @@ The compatibility suite additionally records 20 paired cache-cold and cache-warm
 
 ## Canvas presentation follow-up
 The new renderer avoids resetting unchanged backing-store dimensions, batches grid and phase marker paths and skips identical mathematics canvases using explicit immutable identities. A second paired measurement compares forced canvas redraw with unchanged canvas reuse using the same numerical data, 20 pairs per browser. Browser tests exercise unchanged renders and control/theme invalidation. Results must be verified on the corresponding CI run; no claim of end-to-end latency or GPU/paint improvement is made.
+
+## Verified paired rendering evidence
+[Run #30](https://github.com/DanoV1m/SignalLab/actions/runs/46013756542), snapshot f89343e: median forced/reused math canvas calls were Chromium 0.65/0.20 ms, Firefox 21/1 ms, WebKit 13/1 ms (20 pairs per browser). This is a same-run reuse comparison, not whole-product acceleration. See [reliability protocol](RELIABILITY.md) for repeated-workload and heap diagnostics.

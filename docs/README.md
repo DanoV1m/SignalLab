@@ -12,6 +12,7 @@
 | [Excellence Board review](quality/EXCELLENCE_REVIEW.md) | Evidence-weighted baseline scorecard, trade-offs and roadmap |
 | [Scientific validation](quality/SCIENTIFIC_VALIDATION.md) | Independent NumPy/SciPy comparison |
 | [Performance engineering](quality/PERFORMANCE.md) | Baseline render timings, cache policy and reproducible measurements |
+| [Reliability and stress testing](quality/RELIABILITY.md) | Repeated workloads, browser visits and memory measurement protocol |
 | [Test strategy](quality/TEST_MATRIX.md) | Test coverage, commands, acceptance gates and limitations |
 | [Portfolio case study](PORTFOLIO.md) | Problem, implementation and outcomes |
 | [Release checklist](RELEASE.md) | Owner approval and publication steps |
