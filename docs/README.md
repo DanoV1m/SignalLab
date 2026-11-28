@@ -6,8 +6,15 @@
 | [Design decisions](architecture/DECISIONS.md) | Why vanilla JavaScript, SOS, static hosting and reproducible experiments |
 | [Engineering theory](ENGINEERING.md) | Equations and conditions of validity |
 | [DSP API](reference/DSP_API.md) | Module interfaces and numerical conventions |
+| [FIR and spectral research lab](experiments/RESEARCH_LAB.md) | Windowed-sinc design, response, known-component SNR and leakage |
 | [Experiment handbook](experiments/README.md) | Six guided experiments and expected outcomes |
 | [Verification](VERIFICATION.md) | Historical measured results and remote evidence |
+| [Excellence Board review](quality/EXCELLENCE_REVIEW.md) | Evidence-weighted baseline scorecard, trade-offs and roadmap |
+| [Scientific validation](quality/SCIENTIFIC_VALIDATION.md) | Independent NumPy/SciPy comparison |
+| [Performance engineering](quality/PERFORMANCE.md) | Baseline render timings, cache policy and reproducible measurements |
+| [Verified engineering evidence](quality/EVIDENCE.md) | Commit-specific results, screenshot artifact and measured memory |
+| [Reliability and stress testing](quality/RELIABILITY.md) | Repeated workloads, browser visits and memory measurement protocol |
+| [Accessibility engineering](quality/ACCESSIBILITY.md) | Keyboard, contrast, redundant traces and numeric alternatives |
 | [Test strategy](quality/TEST_MATRIX.md) | Test coverage, commands, acceptance gates and limitations |
 | [Portfolio case study](PORTFOLIO.md) | Problem, implementation and outcomes |
 | [Release checklist](RELEASE.md) | Owner approval and publication steps |

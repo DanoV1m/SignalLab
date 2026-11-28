@@ -11,7 +11,13 @@
 | Incorrect learning result | Six fixed experiments, invalid prediction, report contents | Numerical |
 | Directory relocation | Local asset resolution/order, portable build parity, no external runtime assets | Three structural tests |
 | Documentation organization | Root README exception and local Markdown / HTML image link targets | Two documentation tests |
+| Public numerical contracts | Invalid samples, rate, window and generator configuration | Five unit tests |
+| Spectral windows | Coherent gain, DC, STFT for Hamming and Blackman | Three unit tests |
+| Group delay | Bypass, symmetric FIR reference, first-order DC, cascades, invalid domain and SciPy | Five unit tests and reference cases |
+| Independent numerical agreement | NumPy FFT/convolution and SciPy SOS response; 80 seeded cases | Scientific reference job |
+| Session reuse | Source identity, parameter invalidation, independent math caches, direct convolution agreement | Six unit tests and two hosted browser checks per distribution |
 | Web behavior | Dashboard, isolation, theme, reports, WAV/CSV, mobile, uncaught JS errors | Hosted Chromium |
+| Accessible interaction | Keyboard navigation, disclosure state and unchanged live-region updates | Two checks per browser distribution |
 | Permissions/persistence | Reload and synthetic microphone start/stop | Hosted Chromium, not physical hardware |
 
 ## Run
@@ -26,4 +32,18 @@ python tests/e2e/browser_smoke.py --hosted
 python tests/e2e/browser_smoke.py --hosted --modular
 ```
 
-Both jobs must succeed for the current PR head. Do not merge on stale status. CI collects real screenshots as the browser-screenshots artifact. Manual follow-up: physical microphone, Firefox/Safari, prolonged rendering, keyboard/screen-reader audit, and live HTTPS after owner-approved deployment.
+All current jobs must succeed for the current PR head. Do not merge on stale status. CI collects real screenshots as the browser-screenshots artifact. Read [Excellence Board review](EXCELLENCE_REVIEW.md) for review priorities. Manual follow-up: physical microphone, full Firefox/WebKit workflows beyond synthetic coverage, all-day rendering, keyboard/screen-reader audit, and live HTTPS after owner-approved deployment.
+
+See [scientific validation](SCIENTIFIC_VALIDATION.md) for tolerances and the generated reference report.
+
+Canvas presentation: two Node cache-key tests and hosted browser assertions for unchanged, parameter and theme rendering. Paired forced/reused canvas measurements are diagnostic, not hard timing gates.
+
+Research laboratory: six unit checks, 27 independent reference cases and two browser checks per hosted distribution, plus synthetic cross-browser selection. See [research methodology](../experiments/RESEARCH_LAB.md).
+
+The reliability job introduces repeated numerical and Chromium UI workloads, post-GC diagnostic snapshots and two cache-boundary tests. See [reliability protocol](RELIABILITY.md). Current-head CI success remains mandatory.
+
+The verified [evidence register](EVIDENCE.md) summarizes run #36, including 74 Node tests and 42 browser checks. New revisions must run their own CI.
+
+Audio safety follow-up: five policy regressions and browser tests for malformed file recovery, canceled decode completion and simulated track disconnect in both distributions. Extended synthetic stress uses normalized resets and observes external requests. See [security notes](../SECURITY.md).
+
+Targeted accessibility suite checks both distributions, selected color token pairs, visible control naming, keyboard focus and 320px reflow. See [accessibility scope](ACCESSIBILITY.md).

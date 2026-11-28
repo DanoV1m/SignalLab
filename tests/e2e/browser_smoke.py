@@ -29,13 +29,26 @@ with sync_playwright() as p:
  # Instrument wrappers prove hidden work is skipped.
  page.evaluate('''()=>{window.calls={stft:0,response:0,reconstruct:0,convolve:0};for(const [obj,name] of [[DSP,'stft'],[AdvancedDSP,'response'],[AdvancedDSP,'reconstruct'],[AdvancedDSP,'convolve']]){const old=obj[name];obj[name]=(...args)=>{calls[name]++;return old(...args)}};render()}''')
  assert page.evaluate('Object.values(calls).every(x=>x===0)'); print('PASS no hidden DSP work on dashboard',flush=True)
+ page.evaluate('''()=>{window.statusMutations=0;const observer=new MutationObserver(records=>statusMutations+=records.length);observer.observe(document.getElementById("status"),{childList:true,subtree:true,characterData:true});render();render();}''')
+ page.wait_for_timeout(50); assert page.evaluate('statusMutations===0'); print('PASS unchanged live status does not repeat announcements',flush=True)
  page.screenshot(path=str(build.parent/('dashboard-modular.png' if args.modular else 'dashboard-bundled.png')),full_page=True)
  page.locator('[data-nav=analyze]').click(); page.wait_for_timeout(150); assert page.locator('#time').evaluate('(c)=>c.getContext("2d").getImageData(0,0,c.width,c.height).data.some(v=>v!==0)'); page.locator('#presetChirp').click(); assert 'frames' in page.locator('#stftInfo').inner_text(); assert page.evaluate('calls.stft>0 && calls.response===0 && calls.reconstruct===0'); print('PASS analyzer and isolated STFT',flush=True)
  page.screenshot(path=str(build.parent/('analyzer-modular.png' if args.modular else 'analyzer-bundled.png')),full_page=True)
  page.locator('#themeToggle').click(); page.wait_for_timeout(100); assert page.locator('html').get_attribute('data-theme')=='light'; print('PASS light theme',flush=True)
  page.locator('[data-nav=filter]').click(); page.locator('#presetFilter').click(); assert 'stable' in page.locator('#pzInfo').inner_text(); assert page.evaluate('calls.response>0 && calls.reconstruct===0'); print('PASS filter isolation',flush=True)
- page.locator('[data-nav=math]').click(); page.wait_for_timeout(100); assert 'RMSE' in page.locator('#reconInfo').inner_text(); assert page.evaluate('calls.reconstruct>0 && calls.convolve>0'); print('PASS mathematical tools',flush=True)
- page.locator('[data-nav=academy]').click(); page.locator('#labAnswer').fill('250'); page.locator('#labCheck').click(); assert '1 / 6' in page.locator('#labProgress').inner_text(); page.locator('#labRun').click(); assert page.locator('#labResults').is_visible();
+ assert 'Group delay at' in page.locator('#groupDelayInfo').inner_text() and page.locator('#groupDelay').is_visible(); print('PASS analytic group delay instrument',flush=True)
+ assert '31 taps' in page.locator('#firInfo').inner_text(); assert 'dB' in page.locator('#snrFIR').inner_text(); assert '%' in page.locator('#leak-hann').inner_text(); page.locator('#firTaps').select_option('63'); assert '63 taps' in page.locator('#firInfo').inner_text(); assert page.locator('#firImpulse').is_visible(); print('PASS FIR research and known-component SNR',flush=True)
+ old_leak=page.locator('#leak-rect').inner_text(); page.locator('#leakBin').select_option('64'); assert page.locator('#leak-rect').inner_text()!=old_leak; print('PASS spectral leakage experiment changes with tone bin',flush=True)
+ page.locator('#firTaps').select_option('31'); page.locator('#leakBin').select_option('64.5')
+ page.screenshot(path=str(build.parent/('filter-modular.png' if args.modular else 'filter-bundled.png')),full_page=True)
+ before_math=page.evaluate('({...calls})'); page.locator('[data-nav=math]').click(); page.wait_for_timeout(100); assert 'RMSE' in page.locator('#reconInfo').inner_text(); assert page.evaluate('(before)=>calls.reconstruct>before.reconstruct && calls.convolve===before.convolve',before_math); print('PASS mathematical tools',flush=True)
+ page.evaluate('''()=>{window.cachedMath=last;window.cachedReconstruction=calls.reconstruct;render();render();}'''); assert page.evaluate('last===cachedMath && calls.reconstruct===cachedReconstruction'); print('PASS repeated math render reuses numerical record',flush=True)
+ page.evaluate('''()=>{window.plotDraws=[];const draw=SignalPlots.draw;SignalPlots.draw=(...args)=>{const result=draw(...args);if(result)plotDraws.push(args[0].id);return result;};render();plotDraws.length=0;render();}'''); assert page.evaluate('plotDraws.length===0'); print('PASS unchanged math plots skip canvas redraw',flush=True)
+ page.locator('#keep').fill('4'); page.wait_for_timeout(100); assert page.evaluate('calls.reconstruct>cachedReconstruction'); assert '4 /' in page.locator('#keepOut').inner_text(); print('PASS math cache invalidates retained bins',flush=True)
+ assert page.evaluate("plotDraws.includes('reconstruction')"); page.evaluate('plotDraws.length=0'); page.locator('#themeToggle').click(); page.wait_for_timeout(100); assert page.evaluate("plotDraws.includes('reconstruction') && plotDraws.includes('convolution')"); page.locator('#themeToggle').click(); page.wait_for_timeout(100); print('PASS plot invalidation by independent controls and theme',flush=True)
+ page.screenshot(path=str(build.parent/('math-modular.png' if args.modular else 'math-bundled.png')),full_page=True)
+ page.locator('[data-nav=academy]').focus(); page.keyboard.press('Enter'); assert page.locator('[data-nav=academy]').get_attribute('aria-current')=='page'; assert page.locator('#workspace').evaluate('(e)=>e===document.activeElement'); hint=page.locator('#labHint'); hint.focus(); page.keyboard.press('Enter'); assert hint.get_attribute('aria-expanded')=='true' and page.locator('#labHintText').is_visible(); page.keyboard.press('Enter'); assert hint.get_attribute('aria-expanded')=='false' and not page.locator('#labHintText').is_visible(); print('PASS keyboard navigation and hint disclosure',flush=True)
+ page.locator('#labAnswer').fill('250'); page.locator('#labCheck').click(); assert '1 / 6' in page.locator('#labProgress').inner_text(); page.locator('#labRun').click(); assert page.locator('#labResults').is_visible();
  with page.expect_download() as d: page.locator('#labExport').click()
  assert d.value.suggested_filename.endswith('.md'); print('PASS prediction, experiment and report',flush=True)
  # Exercise local file decoding and CSV export without network access.
@@ -52,6 +65,9 @@ with sync_playwright() as p:
  assert csv.value.suggested_filename.endswith('.csv')
  assert Path(csv.value.path()).read_text().startswith('time_seconds,input,filtered')
  page.locator('#clearAudio').click(); print('PASS WAV decoding and CSV export',flush=True)
+ page.locator('#audioFile').set_input_files({'name':'bad.wav','mimeType':'audio/wav','buffer':b'not audio'}); page.wait_for_function("document.getElementById('status').textContent.includes('Audio import failed')"); assert page.locator('#importAudio').is_enabled(); assert page.locator('#fs').is_enabled(); print('PASS malformed audio recovers synthetic state',flush=True)
+ page.evaluate('''()=>{const proto=AudioContext.prototype,original=proto.decodeAudioData;proto.decodeAudioData=function(bytes){return new Promise((resolve,reject)=>{window.releaseDecode=()=>original.call(this,bytes).then(resolve,reject);});};}''')
+ page.locator('#audioFile').set_input_files({'name':'cancelled.wav','mimeType':'audio/wav','buffer':wav.getvalue()}); page.wait_for_function('typeof releaseDecode === "function"'); assert page.locator('#importAudio').is_disabled(); page.locator('#reset').click(); assert page.locator('#importAudio').is_disabled(); page.evaluate('releaseDecode()'); page.wait_for_function("!document.getElementById('importAudio').disabled"); assert 'synthetic' in page.locator('#source').inner_text(); print('PASS stale audio decode cannot replace reset state',flush=True)
  if args.hosted:
   page.reload(wait_until='load'); assert page.locator('html').get_attribute('data-theme')=='light'
   page.locator('[data-nav=academy]').click(); assert '1 / 6' in page.locator('#labProgress').inner_text()
@@ -62,6 +78,7 @@ with sync_playwright() as p:
   page.locator('#mic').click(); assert page.locator('#fs').is_enabled()
   assert 'synthetic' in page.locator('#source').inner_text()
   print('PASS synthetic microphone start/stop (not physical hardware)',flush=True)
+  page.locator('#mic').click(); page.wait_for_function("document.getElementById('source').textContent.includes('microphone')"); page.evaluate("mic.stream.getTracks()[0].dispatchEvent(new Event('ended'))"); assert page.locator('#fs').is_enabled(); assert 'synthetic' in page.locator('#source').inner_text(); print('PASS simulated microphone disconnect releases source',flush=True)
  else:
   print('SKIP reload persistence and microphone: --hosted required',flush=True)
  page.set_viewport_size({'width':390,'height':844})

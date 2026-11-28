@@ -12,6 +12,12 @@ jobs:
           node-version: '22'
       - run: npm test
       - run: npm run build
+      - name: Measure numerical workload (not browser latency)
+        run: node tests/performance/benchmark.cjs > dist/numerical-benchmark.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: numerical-benchmark
+          path: dist/numerical-benchmark.json
       - uses: actions/upload-artifact@v4
         with:
           name: signallab-static-site
@@ -38,3 +44,87 @@ jobs:
           name: browser-screenshots
           path: dist/*.png
           if-no-files-found: warn
+  scientific-reference:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tests/reference/requirements.txt
+      - run: npm run reference
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scientific-reference-report
+          path: dist/scientific-reference.json
+  compatibility:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.51.0
+      - run: python -m playwright install --with-deps ${{ matrix.browser }}
+      - run: python tests/e2e/compatibility.py --browser ${{ matrix.browser }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: compatibility-${{ matrix.browser }}
+          path: dist/compatibility-*.json
+  reliability:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm run build
+      - name: Repeated numerical workload
+        run: node --expose-gc tests/performance/stress.cjs > dist/numerical-stress.json
+      - run: cat dist/numerical-stress.json
+      - run: python -m pip install playwright==1.51.0
+      - run: python -m playwright install --with-deps chromium
+      - name: Repeated browser interactions
+        run: python tests/e2e/stress.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reliability-evidence
+          path: |
+            dist/*-stress.json
+            dist/stress-dashboard.png
+  accessibility:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.51.0
+      - run: python -m playwright install --with-deps chromium
+      - run: python tests/e2e/accessibility.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-evidence
+          path: |
+            dist/accessibility-report.json
+            dist/accessibility-*.png

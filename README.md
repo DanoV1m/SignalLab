@@ -2,98 +2,104 @@
 
 # SignalLab | Engineering Virtual Labs 01
 
-**A browser-native digital signal processing laboratory for electrical engineering.** Explore the relationship between mathematical theory and numerical behavior: synthesize signals, analyze spectra, design digital filters, reconstruct signals and complete reproducible experiments.
+**A browser-native DSP laboratory for electrical engineering.** Generate signals, inspect spectra, design filters and reconstruct sampled records. Connect mathematical predictions with reproducible numerical experiments.
 
-[![DSP tests and build](https://github.com/DanoV1m/SignalLab/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/DanoV1m/SignalLab/actions/workflows/test.yml)
+[![Main CI](https://github.com/DanoV1m/SignalLab/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/DanoV1m/SignalLab/actions/workflows/test.yml) [![Research candidate CI](https://github.com/DanoV1m/SignalLab/actions/workflows/test.yml/badge.svg?branch=upgrade%2Fexcellence-board-v1)](https://github.com/DanoV1m/SignalLab/pull/4)
 
-[Architecture](docs/architecture/README.md) · [Engineering theory](docs/ENGINEERING.md) · [Experiments](docs/experiments/README.md) · [Verification](docs/VERIFICATION.md) · [Portfolio case study](docs/PORTFOLIO.md)
+[Quick start](#quick-start) · [Architecture](docs/architecture/README.md) · [Scientific evidence](docs/quality/EVIDENCE.md) · [Research laboratory](docs/experiments/RESEARCH_LAB.md) · [Case study](docs/PORTFOLIO.md)
 
-## 01 / Project overview
+## Verified engineering results
 
-| Instrument | Engineering scope |
+<img src="assets/diagrams/verification-dashboard.svg" alt="Run 36: 74 regression tests, 80 reference cases, 264 comparisons, 42 browser checks, 300 workloads, 150 visits, 7 jobs passed and zero uncaught JS errors" width="960">
+
+**Research snapshot [41abb0f](https://github.com/DanoV1m/SignalLab/commit/41abb0fdb9fb9e3be491e1f81c519caa43e1b9d9)** · [CI run #36](https://github.com/DanoV1m/SignalLab/actions/runs/46140127275) · all seven jobs passed. Candidate remains in [PR #4](https://github.com/DanoV1m/SignalLab/pull/4); these figures do not describe the main branch. See [evidence register](docs/quality/EVIDENCE.md) for measurements, limitations and actual reports.
+
+## Instruments
+
+| Workspace | Engineering scope |
 | --- | --- |
-| Overview dashboard | Sample source, dominant FFT bin, RMS and learning progress |
-| Signal analyzer | Waveform synthesis, noise, FFT magnitude/phase, STFT, cursors, aliasing and Gibbs |
-| Filter design | Butterworth low/high pass (orders 1–8), cascaded band pass, Bode and z-plane stability |
-| Signal mathematics | Complex IFFT, spectral reconstruction, linear convolution and RMSE |
-| Engineering academy | Six guided experiments, predictions, hints and exportable reports |
+| Overview | Source, dominant non-DC FFT bin, RMS, progress |
+| Signal analyzer | Waveforms, FFT magnitude/phase, STFT, four analysis windows, measurement cursors |
+| Filter design | Butterworth SOS, Bode, group delay, pole-zero map, independent FIR/IIR research lab |
+| Signal mathematics | IFFT reconstruction, RMSE, full moving-average convolution |
+| Engineering academy | Six guided experiments with predictions, hints and reports |
 
-All processing stays in the browser. No runtime package install, external API or account is required. The project is educational rather than a calibrated measurement instrument.
+All signal processing stays in the browser; no runtime packages, account or external API required. Educational simulation, not calibrated measurement equipment.
 
-## 02 / Architecture
+## Actual application captures
 
-<img src="assets/diagrams/architecture.svg" alt="Architecture of the numerical core, controller, shared data, and academy" width="960">
+[Open eight Playwright screenshots from run #36](https://github.com/DanoV1m/SignalLab/actions/runs/46140127275/artifacts/15261701781) (dashboard, analyzer, filter and mathematics in both distributions; GitHub artifact access and retention apply). The [evidence register](docs/quality/EVIDENCE.md) describes provenance. The diagrams below are conceptual or measured-data graphics, not screenshots.
 
-The pure numerical modules are reusable in Node. The controller manages input, state and active-workspace drawing. The academy executes fixed experiments independently from live controls. See the [architecture handbook](docs/architecture/README.md) for component, sequence, state and build diagrams, and [design decisions](docs/architecture/DECISIONS.md) for trade-offs.
+## Architecture
 
-## 03 / Repository map
+<img src="assets/diagrams/runtime-architecture.svg" alt="Conceptual data flow through controller, session, numerical kernels, research and canvas layers" width="960">
 
-```text
-SignalLab/
-├── .github/workflows/     CI only (no deployment)
-├── assets/diagrams/       Versioned SVG artwork and technical diagrams
-├── docs/                  Engineering handbook
-│   ├── architecture/      Components, sequences and decisions
-│   ├── experiments/       Guided lab methodology
-│   ├── quality/           Test traceability and acceptance gate
-│   └── reference/         Numerical API contracts
-├── scripts/               Deterministic build
-├── src/
-│   ├── academy/           Fixed experiments and reports
-│   ├── dsp/               Independent numerical engine
-│   ├── styles/            Responsive layout and themes
-│   └── ui/                App controller and workspace views
-├── tests/
-│   ├── e2e/               Hosted browser tests
-│   ├── performance/       Repeatable numerical workload
-│   └── unit/              DSP and build regression tests
-├── web/                   All tracked HTML pages
-│   ├── index.html         Modular application entry point
-│   └── portable/          Standalone HTML distribution
-└── package.json           Developer commands (no runtime dependencies)
-```
+Pure numerical modules support independent Node testing. The session layer owns bounded caches; the Cartesian plot module handles invalidation; the academy and fixed research experiment remain separate from live input. [Architecture handbook](docs/architecture/README.md) · [Design decisions](docs/architecture/DECISIONS.md).
 
-## 04 / Quick start
+## Quick start
 
 ```sh
 git clone https://github.com/DanoV1m/SignalLab.git
 cd SignalLab
+git switch upgrade/excellence-board-v1
 python -m http.server 8000
 ```
 
-Open http://localhost:8000/web/. For offline use, open [the portable HTML source](web/portable/SignalLab.html) locally. Microphone access requires permission and a secure origin such as localhost or HTTPS. For future hosting, publish the generated dist/index.html artifact as the site root, only after owner approval. The public live-demo URL is not yet verified.
+Open http://localhost:8000/web/. For offline use, open [portable HTML](web/portable/SignalLab.html). Microphone requires permission and a secure origin. No live demo has been verified. For the released source, stay on main rather than switching to the research branch.
 
 ```sh
-npm test          # numerical and structural tests; Node 22+
-npm run build     # creates dist/index.html
-npm run benchmark # repeated numerical workload
+npm test
+npm run build
+npm run benchmark
+npm run stress
+python -m pip install -r tests/reference/requirements.txt
+npm run reference
 ```
 
-## 05 / Mathematical foundation
+## Mathematical foundations
 
-<img src="assets/diagrams/butterworth-reference.svg" alt="Calculated Butterworth low-pass reference curves for orders one, two, four and eight" width="960">
+<img src="assets/diagrams/butterworth-reference.svg" alt="Analytic Butterworth low-pass reference curves" width="960">
 
-*Analytic reference, not a screenshot or measured hardware result: digital Butterworth low-pass, 4096 Hz sampling, 300 Hz cutoff.*
+Analytic reference at 4096 Hz sampling and 300 Hz cutoff, not measured hardware. Radix-2 FFT, coherent-gain normalization, prewarped bilinear SOS design, analytic group delay, windowed-sinc FIR, IFFT and finite convolution. [Theory](docs/ENGINEERING.md) · [API](docs/reference/DSP_API.md) · [Independent reference methodology](docs/quality/SCIENTIFIC_VALIDATION.md).
 
-The radix-2 FFT implements the DFT with O(N log N) complexity; the one-sided spectrum uses coherent-gain normalization. The Butterworth engine uses prewarped bilinear transformation and cascaded first/second-order sections; Bode plots evaluate those same coefficients. Complex IFFT and conjugate-group selection reconstruct real sampled records. Direct finite convolution has output length N+M-1.
+## Reliability and limitations
 
-See [equations, assumptions and limitations](docs/ENGINEERING.md) and the [DSP API reference](docs/reference/DSP_API.md).
+<img src="assets/diagrams/memory-evidence.svg" alt="Observed Node heap, process RSS and Chromium JS heap from run 36" width="960">
 
-## 06 / Engineering verification
+300 numerical workloads and 150 browser visits completed without uncaught JS errors in the browser test. Browser heap and Node RSS rose; longer soak and profiling are required. No leak-free, hardware calibration, formal WCAG or security certification claim. [Reliability protocol](docs/quality/RELIABILITY.md) · [Performance methodology](docs/quality/PERFORMANCE.md).
 
-| Evidence | V2.0 baseline |
-| --- | --- |
-| Numerical regression | 40/40 passed |
-| Hosted Chromium checks | 12/12 passed |
-| CI jobs | 2/2 passed |
-| Repeated local numerical workloads | 200/200 finite, reconstruction RMS error below 1e-10 |
+## Repository map
 
-Baseline remote evidence: [GitHub Actions run #4](https://github.com/DanoV1m/SignalLab/actions/runs/46005046497). Benchmark scope and historical limitations: [verification report](docs/VERIFICATION.md). [Repository restructuring run #11](https://github.com/DanoV1m/SignalLab/actions/runs/46008040139) passed 43 numerical/structural tests and 24 hosted browser checks (12 per distribution). Documentation organization adds two checks for Markdown placement and relative links; see the current PR checks for this revision. Browser screenshots are generated in CI and collected as artifacts.
+```text
+SignalLab/
+├── .github/workflows/     CI only; no deployment
+├── assets/diagrams/       Technical and evidence SVG graphics
+├── docs/                  Engineering handbook and case study
+│   ├── architecture/     Components, sequences and decisions
+│   ├── experiments/      Research and guided labs
+│   ├── quality/          Validation and evidence register
+│   └── reference/        Numerical API and web guide
+├── scripts/              Deterministic build
+├── src/
+│   ├── academy/          Fixed experiments and reports
+│   ├── dsp/              Numerical and session modules
+│   ├── styles/           Responsive themes
+│   └── ui/               Controller and rendering
+├── tests/
+│   ├── e2e/              Browser and stress tests
+│   ├── performance/      Numerical workloads
+│   ├── reference/        Independent NumPy/SciPy harness
+│   └── unit/             Regressions and build parity
+├── web/                  Modular and portable HTML
+└── package.json          Developer commands
+```
 
-## 07 / Documentation and development
+## Accessibility and input safety
 
-All supplementary Markdown documentation lives under `docs/`; the root README is the only exception. See [web entry points](docs/reference/WEB.md) for browser and build instructions.
+The targeted [accessibility suite](docs/quality/ACCESSIBILITY.md) checks keyboard navigation, selected color contrast and numerical cursor alternatives. [Run #40](https://github.com/DanoV1m/SignalLab/actions/runs/46140971847) on 62acc63 passed 79 Node tests, 48 browser checks, 264 comparisons and 600 synthetic workspace visits; zero external requests were observed on that stress path. See [security notes](docs/SECURITY.md) and [extended reliability results](docs/quality/RELIABILITY.md). This is not a formal conformance or security audit.
 
-Read the [engineering handbook](docs/README.md) for the complete map, [test strategy](docs/quality/TEST_MATRIX.md), [contributing guide](docs/CONTRIBUTING.md), [privacy and security notes](docs/SECURITY.md), [changelog](docs/CHANGELOG.md) and [release checklist](docs/RELEASE.md).
+## Engineering handbook
 
-Physical microphone tests, non-Chromium browsers, prolonged browser workloads and formal accessibility/security audits remain open. No license has been selected. No deployment or portfolio changes are performed by CI.
+[Documentation index](docs/README.md) · [Test strategy](docs/quality/TEST_MATRIX.md) · [Historical verification](docs/VERIFICATION.md) · [Contributing](docs/CONTRIBUTING.md) · [Security](docs/SECURITY.md) · [Changelog](docs/CHANGELOG.md) · [Release checklist](docs/RELEASE.md).
+
+No license selected; no deployment or permissions changes authorized. Merge and publication remain owner-controlled.

@@ -1,0 +1,26 @@
+# Independent scientific validation
+
+The JavaScript runtime remains dependency-free. NumPy and SciPy are test-only reference implementations. The reference harness passes deterministic input vectors to the same Node-importable modules used by the browser and compares outputs with independent libraries. It is not another copy of the JavaScript algorithm.
+
+| Model | Cases | Acceptance |
+| --- | ---: | --- |
+| FFT/IFFT and normalized spectra | 12 | Complex coefficients, real reconstruction, imaginary residual, rectangular and periodic Hann, Hamming and Blackman amplitude |
+| Butterworth low/high | 32 | Orders 1–8 at two sample rates; time-domain SOS output, complex response and group delay |
+| Cascaded band-pass | 6 | Orders 2, 4 and 8 per edge; reference is a high-pass then low-pass cascade, not canonical bandpass |
+| Linear convolution | 3 | Finite full convolution including the tail |
+
+The harness uses fixed seed 2026, checks shapes and finite values, compares 201 output groups (84 FFT, 114 filter, 3 convolution), and separately checks all digital filter poles are inside the unit circle. Absolute tolerances range from 1e-10 to 2e-9; specified relative tolerance applies to FFT and filters. Group delay compares SciPy's section-wise group_delay away from endpoints and deep stopbands (gain > 1e-6), with absolute tolerance 2e-8 samples and relative tolerance 1e-8. Actual maximum errors and dependency versions are generated in the JSON artifact. Do not claim results until the corresponding commit's CI has passed.
+
+## Reproduce
+
+```sh
+python -m pip install -r tests/reference/requirements.txt
+npm run reference
+```
+
+This is a selected numerical verification grid, not exhaustive validation, instrument calibration, or a claim of equivalence for every possible input. See [API contracts](../reference/DSP_API.md) and [verification strategy](TEST_MATRIX.md).
+
+## Research extension
+Adds 12 FIR cases × four comparisons, 12 leakage cases and three SNR cases: 27 additional cases and 63 comparisons, for 80 cases and 264 comparisons in total. FIR uses symmetric window definitions, spectral leakage uses periodic windows. Results are verified on the current commit, not inferred from prior runs.
+
+Verified [run #36](https://github.com/DanoV1m/SignalLab/actions/runs/46140127275) on 41abb0f passed 80 cases and 264 comparisons. See the [evidence register](EVIDENCE.md) for commit-specific scope.
