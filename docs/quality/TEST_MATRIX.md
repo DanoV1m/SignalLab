@@ -45,3 +45,5 @@ The reliability job introduces repeated numerical and Chromium UI workloads, pos
 The verified [evidence register](EVIDENCE.md) summarizes run #36, including 74 Node tests and 42 browser checks. New revisions must run their own CI.
 
 Audio safety follow-up: five policy regressions and browser tests for malformed file recovery, canceled decode completion and simulated track disconnect in both distributions. Extended synthetic stress uses normalized resets and observes external requests. See [security notes](../SECURITY.md).
+
+Targeted accessibility suite checks both distributions, selected color token pairs, visible control naming, keyboard focus and 320px reflow. See [accessibility scope](ACCESSIBILITY.md).

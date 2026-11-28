@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — accessible instrument polish
+- Add stable theme name, workspace focus, non-color trace patterns and cursor measurement table.
+- Add prediction validation semantics and targeted accessibility checks for both distributions.
+- Record extended stress evidence and unresolved heap growth.
+
 ## Unreleased — audio safety and extended diagnostics
 - Bound concurrent audio decoding, validate decoded resources and handle simulated track disconnection.
 - Invalidate plot keys and sample ownership on source reset.

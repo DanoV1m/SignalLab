@@ -29,3 +29,7 @@ All seven jobs passed on 41abb0f. The 300 Node workloads and 30 Chromium cycles 
 ## Extended diagnostic protocol
 
 The follow-up increases to 120 cycles / 600 visits (plus warmup and diagnostic reset navigations). Every 20 cycles the test returns to dashboard and resets the signal before forcing GC, to reduce state-dependent retention differences. It also asserts zero external HTTP(S)/WS(S) requests observed in this synthetic path. This protocol differs from run #36, so compare trends and counters with caution. No long-hour soak or heap-retainer diagnosis is claimed.
+
+## Verified extended stress — run #40
+
+[Run #40](https://github.com/DanoV1m/SignalLab/actions/runs/46140971847) on 62acc63 passed all seven jobs, 79 Node tests, 264 reference comparisons and 48 smoke checks. 120 cycles / 600 visits completed with zero observed external requests. Normalized post-GC JS heap bytes at cycles 0, 20, 40, 60, 80, 100, 120: 2074000, 2393672, 2539428, 2602444, 2658704, 2672260, 2756896. DOM nodes remained 1069 and listeners 89. Growth slowed overall but remains unresolved; retained-object profiling is still needed. Different protocol from run #36, not a controlled before/after improvement.

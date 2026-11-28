@@ -38,12 +38,16 @@ function draw(canvas,series,xmax,ymin,ymax,xlabel,ylabel,cursor,formatX,identity
  for(let i=0;i<=5;i++){const x=l+i*(rt-l)/5,y=b-i*(b-t)/5;c.textAlign='center';c.fillText(formatX?formatX(xmax*i/5):(xmax*i/5).toFixed(xmax<10?2:1),x,b+12);c.textAlign='right';c.fillText((ymin+(ymax-ymin)*i/5).toFixed(2),l-5,y);}
  c.textAlign='center';c.fillText(xlabel,(l+rt)/2,h-8);c.save();c.translate(10,(t+b)/2);c.rotate(-Math.PI/2);c.fillText(ylabel,0,0);c.restore();
  c.save();c.beginPath();c.rect(l,t,rt-l,b-t);c.clip();
+ let seriesIndex=0;
  for(const [data,col] of (typeof series==='function'?series():series)){
+  c.setLineDash(seriesIndex%2?[6,4]:[]);
   c.strokeStyle=col;c.lineWidth=1.55;c.beginPath();let first=true;
   for(const p of data){if(p.x>xmax)break;if(!Number.isFinite(p.y)){first=true;continue;}const x=px(p.x),y=py(p.y);first?c.moveTo(x,y):c.lineTo(x,y);first=false;}
   c.stroke();
-  if(canvas.id==='phase'){c.fillStyle=col;c.beginPath();for(const p of data){if(p.x>xmax)break;if(Number.isFinite(p.y)){const x=px(p.x),y=py(p.y);c.moveTo(x+2.5,y);c.arc(x,y,2.5,0,Math.PI*2);}}c.fill();}
+  if(canvas.id==='phase'){c.fillStyle=col;c.beginPath();for(const p of data){if(p.x>xmax)break;if(Number.isFinite(p.y)){const x=px(p.x),y=py(p.y);if(seriesIndex%2)c.rect(x-2.5,y-2.5,5,5);else{c.moveTo(x+2.5,y);c.arc(x,y,2.5,0,Math.PI*2);}}}c.fill();}
+  seriesIndex++;
  }
+ c.setLineDash([]);
  if(Number.isFinite(cursor)&&cursor>=0&&cursor<=xmax){c.strokeStyle=color('cursor');c.setLineDash([4,4]);c.beginPath();c.moveTo(px(cursor),t);c.lineTo(px(cursor),b);c.stroke();c.setLineDash([]);}
  c.restore();canvas.plotMax=xmax;
  if(key)cache.remember(canvas,key);

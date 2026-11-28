@@ -94,6 +94,10 @@ SignalLab/
 └── package.json          Developer commands
 ```
 
+## Accessibility and input safety
+
+The targeted [accessibility suite](docs/quality/ACCESSIBILITY.md) checks keyboard navigation, selected color contrast and numerical cursor alternatives. [Run #40](https://github.com/DanoV1m/SignalLab/actions/runs/46140971847) on 62acc63 passed 79 Node tests, 48 browser checks, 264 comparisons and 600 synthetic workspace visits; zero external requests were observed on that stress path. See [security notes](docs/SECURITY.md) and [extended reliability results](docs/quality/RELIABILITY.md). This is not a formal conformance or security audit.
+
 ## Engineering handbook
 
 [Documentation index](docs/README.md) · [Test strategy](docs/quality/TEST_MATRIX.md) · [Historical verification](docs/VERIFICATION.md) · [Contributing](docs/CONTRIBUTING.md) · [Security](docs/SECURITY.md) · [Changelog](docs/CHANGELOG.md) · [Release checklist](docs/RELEASE.md).

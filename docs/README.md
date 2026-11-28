@@ -14,6 +14,7 @@
 | [Performance engineering](quality/PERFORMANCE.md) | Baseline render timings, cache policy and reproducible measurements |
 | [Verified engineering evidence](quality/EVIDENCE.md) | Commit-specific results, screenshot artifact and measured memory |
 | [Reliability and stress testing](quality/RELIABILITY.md) | Repeated workloads, browser visits and memory measurement protocol |
+| [Accessibility engineering](quality/ACCESSIBILITY.md) | Keyboard, contrast, redundant traces and numeric alternatives |
 | [Test strategy](quality/TEST_MATRIX.md) | Test coverage, commands, acceptance gates and limitations |
 | [Portfolio case study](PORTFOLIO.md) | Problem, implementation and outcomes |
 | [Release checklist](RELEASE.md) | Owner approval and publication steps |

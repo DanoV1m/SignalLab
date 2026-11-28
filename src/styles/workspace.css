@@ -32,3 +32,15 @@ body{font:14px/1.6 system-ui,sans-serif}header{padding:18px max(24px,3vw);backgr
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
 
 .research-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.research-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}.research-table th,.research-table td{text-align:left;padding:9px;border-bottom:1px solid var(--line)}.research-table td{text-align:right;color:var(--cyan)}@media(max-width:540px){.research-metrics{grid-template-columns:1fr}}
+
+/* Accessible instrument polish */
+.control-value{font-variant-numeric:tabular-nums;color:var(--cyan);font-weight:650}
+.control input[type=range]{accent-color:var(--cyan);min-height:32px}
+.legend b,.legend i{font-style:normal;font-weight:650}
+.data-disclosure{margin:16px 0;padding:12px;background:var(--field);border:1px solid var(--line);border-radius:8px}
+.data-disclosure summary{cursor:pointer;min-height:32px;font-weight:650;color:var(--text)}
+.data-disclosure summary:focus-visible,#workspace:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+.research-table caption{text-align:left;color:var(--muted);font-weight:600;padding:8px 0}
+.module-nav button,.buttonrow button{min-height:44px}
+@media(max-width:540px){.data-disclosure{padding:8px}.research-table td,.research-table th{padding:6px;font-size:12px}}
+@media(forced-colors:active){.module-nav button[aria-current=page]{border:2px solid Highlight}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid Highlight}}
