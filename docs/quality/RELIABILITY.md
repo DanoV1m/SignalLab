@@ -25,3 +25,7 @@ Session keys compare scalar values without JSON coercion; omitted parameters mus
 ## Verified results — run #36
 
 All seven jobs passed on 41abb0f. The 300 Node workloads and 30 Chromium cycles completed; 150 visits, zero uncaught JS errors. Node heap increased 0.78%, RSS 57.9%, and browser JS heap 17.7% with stable DOM/listener/document counts. These diagnostics warrant a longer soak and retained-object profiling, not a declaration of a leak or absence of leaks. See the [evidence register](EVIDENCE.md) for raw bytes, chart and artifact links.
+
+## Extended diagnostic protocol
+
+The follow-up increases to 120 cycles / 600 visits (plus warmup and diagnostic reset navigations). Every 20 cycles the test returns to dashboard and resets the signal before forcing GC, to reduce state-dependent retention differences. It also asserts zero external HTTP(S)/WS(S) requests observed in this synthetic path. This protocol differs from run #36, so compare trends and counters with caution. No long-hour soak or heap-retainer diagnosis is claimed.

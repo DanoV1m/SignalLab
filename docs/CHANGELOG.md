@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — audio safety and extended diagnostics
+- Bound concurrent audio decoding, validate decoded resources and handle simulated track disconnection.
+- Invalidate plot keys and sample ownership on source reset.
+- Add five audio policy regressions and three browser checks per distribution; extend repeated synthetic stress to 120 cycles with normalized snapshots.
+
 ## Unreleased — professional engineering showcase
 - Rework the root README and portfolio case study around verified commit-specific evidence.
 - Add measured verification and memory graphics, current architecture diagram and screenshot artifact provenance.

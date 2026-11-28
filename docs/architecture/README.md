@@ -134,3 +134,20 @@ flowchart LR
 ```
 
 See [verified evidence](../quality/EVIDENCE.md); historical counts never stand in for current-head CI.
+
+## 8. Audio resource lifecycle
+
+```mermaid
+flowchart LR
+ F[Local file] --> G[Single-flight gate]
+ G --> E[Encoded size check]
+ E --> D[Browser decode]
+ D --> T{Current token?}
+ T -->|Yes| V[Decoded limits and downmix]
+ V --> S[Session]
+ T -->|No| C[Discard]
+ V --> C
+ C --> R[Close context and release gate]
+```
+
+The gate is acquired after the encoded size check in the implementation. A reset invalidates pending work and plot cache references but cannot abort the browser decoder. See [security notes](../SECURITY.md).

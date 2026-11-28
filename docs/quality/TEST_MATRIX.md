@@ -43,3 +43,5 @@ Research laboratory: six unit checks, 27 independent reference cases and two bro
 The reliability job introduces repeated numerical and Chromium UI workloads, post-GC diagnostic snapshots and two cache-boundary tests. See [reliability protocol](RELIABILITY.md). Current-head CI success remains mandatory.
 
 The verified [evidence register](EVIDENCE.md) summarizes run #36, including 74 Node tests and 42 browser checks. New revisions must run their own CI.
+
+Audio safety follow-up: five policy regressions and browser tests for malformed file recovery, canceled decode completion and simulated track disconnect in both distributions. Extended synthetic stress uses normalized resets and observes external requests. See [security notes](../SECURITY.md).

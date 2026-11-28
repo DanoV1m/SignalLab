@@ -1,5 +1,6 @@
 """Repeated synthetic browser interaction and post-GC JS heap diagnostics (Chromium only)."""
 import json, pathlib, subprocess, threading, functools, http.server, time
+from urllib.parse import urlparse
 from playwright.sync_api import sync_playwright
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 subprocess.run(['node',str(ROOT/'scripts/build.cjs')],check=True)
@@ -10,10 +11,14 @@ try:
   browser=p.chromium.launch()
   page=browser.new_page(viewport={'width':1280,'height':900})
   errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  external=[];page.on('request',lambda r:external.append(r.url) if urlparse(r.url).scheme in ('http','https','ws','wss') and urlparse(r.url).hostname!='127.0.0.1' else None)
   page.goto(f'http://127.0.0.1:{server.server_port}/')
   cdp=page.context.new_cdp_session(page)
   snapshots=[];timings=[]
   def snapshot(cycle):
+   # Normalize source and controls before each diagnostic sample.
+   page.locator('[data-nav=dashboard]').click(); page.locator('#reset').click()
+   page.evaluate('()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))')
    cdp.send('HeapProfiler.collectGarbage')
    heap=cdp.send('Runtime.getHeapUsage')
    dom=cdp.send('Memory.getDOMCounters')
@@ -40,11 +45,12 @@ try:
    timings.append((time.perf_counter()-start)*1000)
   for i in range(3): cycle(i)
   timings.clear();snapshot(0)
-  for i in range(30):
+  for i in range(120):
    cycle(i+3)
-   if (i+1)%10==0:snapshot(i+1)
+   if (i+1)%20==0:snapshot(i+1)
   assert not errors,errors
-  report=dict(browser=browser.version,cycles=30,workspace_visits=150,record_samples=4096,elapsed_ms=sum(timings),snapshots=snapshots,uncaught_js_errors=len(errors),scope='Chromium synthetic UI cycles; CDP post-GC JS heap and DOM counters; excludes GPU/native memory and physical audio')
+  assert not external,external
+  report=dict(browser=browser.version,cycles=120,workspace_visits=600,record_samples=4096,elapsed_ms=sum(timings),snapshots=snapshots,uncaught_js_errors=len(errors),external_http_requests=len(external),scope='Chromium synthetic UI cycles; CDP post-GC JS heap and DOM counters after normalized reset; excludes GPU/native memory and physical audio')
   print(json.dumps(report,indent=2))
   (ROOT/'dist'/'browser-stress.json').write_text(json.dumps(report,indent=2)+'\n')
   page.screenshot(path=str(ROOT/'dist'/'stress-dashboard.png'),full_page=True)

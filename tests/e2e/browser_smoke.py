@@ -65,6 +65,9 @@ with sync_playwright() as p:
  assert csv.value.suggested_filename.endswith('.csv')
  assert Path(csv.value.path()).read_text().startswith('time_seconds,input,filtered')
  page.locator('#clearAudio').click(); print('PASS WAV decoding and CSV export',flush=True)
+ page.locator('#audioFile').set_input_files({'name':'bad.wav','mimeType':'audio/wav','buffer':b'not audio'}); page.wait_for_function("document.getElementById('status').textContent.includes('Audio import failed')"); assert page.locator('#importAudio').is_enabled(); assert page.locator('#fs').is_enabled(); print('PASS malformed audio recovers synthetic state',flush=True)
+ page.evaluate('''()=>{const proto=AudioContext.prototype,original=proto.decodeAudioData;proto.decodeAudioData=function(bytes){return new Promise((resolve,reject)=>{window.releaseDecode=()=>original.call(this,bytes).then(resolve,reject);});};}''')
+ page.locator('#audioFile').set_input_files({'name':'cancelled.wav','mimeType':'audio/wav','buffer':wav.getvalue()}); page.wait_for_function('typeof releaseDecode === "function"'); assert page.locator('#importAudio').is_disabled(); page.locator('#reset').click(); assert page.locator('#importAudio').is_disabled(); page.evaluate('releaseDecode()'); page.wait_for_function("!document.getElementById('importAudio').disabled"); assert 'synthetic' in page.locator('#source').inner_text(); print('PASS stale audio decode cannot replace reset state',flush=True)
  if args.hosted:
   page.reload(wait_until='load'); assert page.locator('html').get_attribute('data-theme')=='light'
   page.locator('[data-nav=academy]').click(); assert '1 / 6' in page.locator('#labProgress').inner_text()
@@ -75,6 +78,7 @@ with sync_playwright() as p:
   page.locator('#mic').click(); assert page.locator('#fs').is_enabled()
   assert 'synthetic' in page.locator('#source').inner_text()
   print('PASS synthetic microphone start/stop (not physical hardware)',flush=True)
+  page.locator('#mic').click(); page.wait_for_function("document.getElementById('source').textContent.includes('microphone')"); page.evaluate("mic.stream.getTracks()[0].dispatchEvent(new Event('ended'))"); assert page.locator('#fs').is_enabled(); assert 'synthetic' in page.locator('#source').inner_text(); print('PASS simulated microphone disconnect releases source',flush=True)
  else:
   print('SKIP reload persistence and microphone: --hosted required',flush=True)
  page.set_viewport_size({'width':390,'height':844})
