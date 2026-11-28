@@ -21,3 +21,7 @@ The reliability job uploads JSON reports and an actual dashboard capture. The cu
 
 ## Cache contract
 Session keys compare scalar values without JSON coercion; omitted parameters must not collide with null or NaN. One entry per cache; identity-based arrays are immutable by contract. The new regressions verify invalid inputs cannot hit a cached valid result and a superseded source is not reused as the current record. See [architecture](../architecture/README.md).
+
+## Verified results — run #36
+
+All seven jobs passed on 41abb0f. The 300 Node workloads and 30 Chromium cycles completed; 150 visits, zero uncaught JS errors. Node heap increased 0.78%, RSS 57.9%, and browser JS heap 17.7% with stable DOM/listener/document counts. These diagnostics warrant a longer soak and retained-object profiling, not a declaration of a leak or absence of leaks. See the [evidence register](EVIDENCE.md) for raw bytes, chart and artifact links.

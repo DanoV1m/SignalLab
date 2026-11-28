@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased — professional engineering showcase
+- Rework the root README and portfolio case study around verified commit-specific evidence.
+- Add measured verification and memory graphics, current architecture diagram and screenshot artifact provenance.
+- Record memory growth explicitly and retain long-soak, hardware and audit limitations.
+
 ## Unreleased — reliability and research documentation
 - Prevent session cache collisions between omitted and invalid generator parameters.
 - Add two boundary regressions and repeated numerical / browser stress protocols with diagnostic memory snapshots.

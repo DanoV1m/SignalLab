@@ -22,3 +22,5 @@ This is a selected numerical verification grid, not exhaustive validation, instr
 
 ## Research extension
 Adds 12 FIR cases × four comparisons, 12 leakage cases and three SNR cases: 27 additional cases and 63 comparisons, for 80 cases and 264 comparisons in total. FIR uses symmetric window definitions, spectral leakage uses periodic windows. Results are verified on the current commit, not inferred from prior runs.
+
+Verified [run #36](https://github.com/DanoV1m/SignalLab/actions/runs/46140127275) on 41abb0f passed 80 cases and 264 comparisons. See the [evidence register](EVIDENCE.md) for commit-specific scope.

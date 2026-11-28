@@ -2,7 +2,7 @@
 
 SignalLab is a static browser instrument. Four workspaces and a dashboard share one sample record; numerical kernels can also be imported in Node independently of the DOM.
 
-![System layers](../../assets/diagrams/architecture.svg)
+![Runtime architecture](../../assets/diagrams/runtime-architecture.svg)
 
 ## 1. Components
 
@@ -28,6 +28,9 @@ flowchart LR
 | Numerical core | src/dsp/dsp.js | Sample arrays, spectra, metrics and pure numerical functions |
 | Advanced DSP | src/dsp/advanced.js | Filter coefficients, response, roots, reconstruction and convolution |
 | Session model | src/dsp/session.js | DOM-free source, analysis and independent math caches; immutable arrays by contract |
+| Fixed research kernels | src/dsp/research.js | FIR coefficients and response, step, SNR and leakage |
+| Canvas presentation | src/ui/plots.js | Cartesian renderer, per-canvas invalidation |
+| Research UI | src/ui/research-ui.js | Isolated fixed synthetic experiment |
 | Academy | src/academy/academy.js | Fixed IDs, presets, expected values, predictions and report |
 | UI | src/ui/app.js, academy-ui.js, workspace.js | Input lifecycle, DOM events, rendering, navigation and progress |
 | Presentation | web/index.html, src/styles/workspace.css | Controls, layout, themes and canvases |
@@ -114,3 +117,20 @@ Each cache holds one entry. Synthetic inputs are keyed by generator parameters, 
 ## 6. Canvas presentation layer
 
 `src/ui/plots.js` owns the Cartesian plot rendering, grid batching, backing-store sizing and per-canvas invalidation. Math plots use immutable sample/result identity plus axes, dimensions, pixel ratio and theme as the render key. Unchanged plots are not drawn again; independent retained-bin changes affect reconstruction only unless the shared y range changes, in which case both plots must redraw. Other plots retain full drawing on demand. No visual downsampling or modification of exported data is performed. The rendering module uses a WeakMap and retains one key per canvas.
+
+## 7. Evidence pipeline
+
+```mermaid
+flowchart LR
+ A[Exact candidate commit] --> B[Build and regression]
+ A --> C[NumPy / SciPy oracle]
+ A --> D[Hosted browser suites]
+ A --> E[Repeated workloads]
+ B --> F[Commit-specific evidence]
+ C --> F
+ D --> F
+ E --> F
+ F --> G[Engineering evidence register]
+```
+
+See [verified evidence](../quality/EVIDENCE.md); historical counts never stand in for current-head CI.

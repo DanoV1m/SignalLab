@@ -41,3 +41,5 @@ Canvas presentation: two Node cache-key tests and hosted browser assertions for 
 Research laboratory: six unit checks, 27 independent reference cases and two browser checks per hosted distribution, plus synthetic cross-browser selection. See [research methodology](../experiments/RESEARCH_LAB.md).
 
 The reliability job introduces repeated numerical and Chromium UI workloads, post-GC diagnostic snapshots and two cache-boundary tests. See [reliability protocol](RELIABILITY.md). Current-head CI success remains mandatory.
+
+The verified [evidence register](EVIDENCE.md) summarizes run #36, including 74 Node tests and 42 browser checks. New revisions must run their own CI.

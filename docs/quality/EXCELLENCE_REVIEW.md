@@ -53,3 +53,7 @@ The first revision implements the first three rows. Other rows remain proposals.
 ## Governance
 
 Changes are confined to the dedicated SignalLab branch. Current CI success and owner approval are required before merge. No deployment, license selection, permissions changes or publication of private material are authorized.
+
+## Follow-up review — 2026-11-28
+
+The [verified evidence](EVIDENCE.md) now substantiates independent numerical agreement, cross-browser synthetic compatibility, architecture separation, research instruments and repeated workloads. The baseline score above remains historical, not a fresh score. Remaining high-priority work: investigate retained browser heap and RSS, improve accessibility and security evidence, validate physical microphone, verify long-running behavior, and obtain owner approval before release. No claim of 100/100 or formal certification.
